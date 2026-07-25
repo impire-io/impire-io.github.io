@@ -1,6 +1,6 @@
 /* impire.io — shared design system.
    Tokens descend from pra/explainer/index.html; copy follows pra/book/STYLE.md.
-   One dark world, four hues: each page sets --a to its project's hue. */
+   One dark world, three hues: each page sets --a to its project's hue. */
 
 :root {
   --bg: #0d1015;
@@ -12,7 +12,6 @@
   --line: #232c3b;
   --pra: #5eb1ff;
   --soulstream: #a78bfa;
-  --soulrealm: #4ade80;
   --imps: #fb923c;
   --a: var(--ink-dim); /* page accent; overridden per page */
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
@@ -22,7 +21,6 @@
 
 body[data-p="pra"]        { --a: var(--pra); }
 body[data-p="soulstream"] { --a: var(--soulstream); }
-body[data-p="soulrealm"]  { --a: var(--soulrealm); }
 body[data-p="imps"]       { --a: var(--imps); }
 
 * { box-sizing: border-box; }
@@ -61,7 +59,6 @@ a:focus-visible, button:focus-visible {
 .nav .links a { text-decoration: none; color: var(--ink-dim); transition: color .15s; }
 .nav .links a:hover[data-p="pra"],        .nav .links a[aria-current][data-p="pra"]        { color: var(--pra); }
 .nav .links a:hover[data-p="soulstream"], .nav .links a[aria-current][data-p="soulstream"] { color: var(--soulstream); }
-.nav .links a:hover[data-p="soulrealm"],  .nav .links a[aria-current][data-p="soulrealm"]  { color: var(--soulrealm); }
 .nav .links a:hover[data-p="imps"],       .nav .links a[aria-current][data-p="imps"]       { color: var(--imps); }
 
 /* ---------- hero ---------- */
@@ -127,7 +124,6 @@ a:focus-visible, button:focus-visible {
 .band { --a: var(--pra); position: relative; border-bottom: 1px solid var(--line); overflow: hidden; }
 .band[data-p="pra"]        { --a: var(--pra); }
 .band[data-p="soulstream"] { --a: var(--soulstream); }
-.band[data-p="soulrealm"]  { --a: var(--soulrealm); }
 .band[data-p="imps"]       { --a: var(--imps); }
 .band::before {
   content: "";

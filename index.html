@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Impire is four open projects around one question: what does it take for software to notice, decide, and act on its own?">
+<meta name="description" content="Impire is three open projects around one question: what does it take for software to notice, decide, and act on its own?">
 <title>impire.io — intelligence with initiative</title>
 <link rel="stylesheet" href="./assets/site.css">
 </head>
@@ -12,13 +12,12 @@
 <nav class="nav" aria-label="impire projects">
   <a class="wordmark" href="./"><b>impire</b><span class="tld">.io</span>
     <span class="dots" aria-hidden="true">
-      <i style="background:var(--pra)"></i><i style="background:var(--soulstream)"></i><i style="background:var(--soulrealm)"></i><i style="background:var(--imps)"></i>
+      <i style="background:var(--pra)"></i><i style="background:var(--soulstream)"></i><i style="background:var(--imps)"></i>
     </span>
   </a>
   <span class="links">
     <a href="./pra/" data-p="pra">pra</a>
     <a href="./soulstream/" data-p="soulstream">soulstream</a>
-    <a href="./soulrealm/" data-p="soulrealm">soulrealm</a>
     <a href="./imps/" data-p="imps">imps</a>
   </span>
 </nav>
@@ -26,12 +25,12 @@
 <header class="hero" id="top">
   <canvas id="sky" class="ambient" aria-hidden="true"></canvas>
   <div class="copy">
-    <p class="eyebrow" style="color:var(--ink-dim)">an open constellation · four projects</p>
+    <p class="eyebrow" style="color:var(--ink-dim)">an open constellation · three projects</p>
     <h1>Intelligence with initiative.</h1>
     <p class="sub">
-      Impire is four open projects around one question: what does it take for software
+      Impire is three open projects around one question: what does it take for software
       to notice, decide, and act on its own, and to work beside people as a peer?
-      There is <b>no platform underneath</b>. Just four codebases you can read, and an
+      There is <b>no platform underneath</b>. Just three codebases you can read, and an
       honest record of what works and what doesn't yet.
     </p>
   </div>
@@ -133,36 +132,6 @@
   </div>
 </section>
 
-<section class="band" data-p="soulrealm" id="soulrealm">
-  <div class="inner">
-    <div>
-      <p class="eyebrow">soulrealm · runtime</p>
-      <h2>Soulstream is the record. Soulrealm is the room.</h2>
-      <p class="body">
-        The execution ground where agent personas actually run. Every workload gets its
-        own minted identity, and its whole lifecycle is <b>operations on the same log
-        people read</b> — nothing happens off the record. The design is settled and the
-        first milestones are landing.
-      </p>
-      <p class="status">status: <i>early build</i> · no release yet · MIT</p>
-      <a class="enter" href="./soulrealm/" aria-label="Soulrealm, coming soon">Watch it land →</a>
-    </div>
-    <div class="motif" aria-hidden="true">
-      <svg width="220" height="170" viewBox="0 0 220 170" fill="none">
-        <path d="M30 130 L 110 90 L 190 130 L 110 168 Z" stroke="#4ade80" stroke-width="1.5" fill="#4ade8010"/>
-        <path d="M30 130 L 30 58 L 110 18 L 110 90"      stroke="#2a3342" stroke-width="1.5"/>
-        <path d="M190 130 L 190 58 L 110 18"             stroke="#2a3342" stroke-width="1.5"/>
-        <circle cx="110" cy="126" r="5" fill="#4ade80"/>
-        <circle cx="78"  cy="136" r="3" fill="#4ade80" opacity="0.55"/>
-        <circle cx="142" cy="140" r="3" fill="#4ade80" opacity="0.55"/>
-        <g font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#5c6577">
-          <text x="96" y="112">persona</text>
-        </g>
-      </svg>
-    </div>
-  </div>
-</section>
-
 <section class="band" data-p="imps" id="imps">
   <div class="inner">
     <div>
@@ -229,17 +198,15 @@
   const HUES = {
     pra:        css.getPropertyValue('--pra').trim(),
     soulstream: css.getPropertyValue('--soulstream').trim(),
-    soulrealm:  css.getPropertyValue('--soulrealm').trim(),
     imps:       css.getPropertyValue('--imps').trim(),
   };
 
   const NODES = [
     { id: 'pra',        label: 'pra',        x: 0.56, y: 0.26, r: 4.5, ph: 0.0 },
-    { id: 'soulstream', label: 'soulstream', x: 0.82, y: 0.42, r: 5.0, ph: 1.7 },
-    { id: 'soulrealm',  label: 'soulrealm',  x: 0.74, y: 0.74, r: 4.0, ph: 3.1 },
-    { id: 'imps',       label: 'imps',       x: 0.50, y: 0.62, r: 4.0, ph: 4.6 },
+    { id: 'soulstream', label: 'soulstream', x: 0.82, y: 0.48, r: 5.0, ph: 1.7 },
+    { id: 'imps',       label: 'imps',       x: 0.52, y: 0.66, r: 4.0, ph: 4.6 },
   ];
-  const EDGES = [[0, 1], [1, 2], [2, 3], [3, 0]];
+  const EDGES = [[0, 1], [1, 2], [2, 0]];
 
   let seed = 7;
   const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
