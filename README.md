@@ -30,6 +30,40 @@ repo's own rule (journey episode 0047) is that no empirical claim is
 final before a numbers audit re-verifies it, and that audit hasn't run
 yet. The draft labels come off when it has.
 
+## Deploying, and the WIP preview
+
+Production is GitHub Pages: pushing `main` publishes to impire.io.
+Nothing goes live until you push.
+
+The work-in-progress site lives behind a login on Vercel (project
+`impire-wip`, no custom domain — impire.io never points there). From
+this directory:
+
+```
+vercel deploy
+```
+
+uploads the working tree as-is — committed or not — and prints a
+`*.vercel.app` URL that only the project owner's Vercel login can open
+(unauthenticated visitors are redirected to Vercel SSO; this is the
+project's default "Standard Protection", don't turn it off). To show a
+WIP state to someone else, use a shareable link from the deployment's
+page on vercel.com — time-limited, no account needed on their end.
+
+Two free-plan traps, learned the hard way:
+
+- Production deployments are NOT behind the login (Vercel Authentication
+  doesn't cover production on this plan), so **never `vercel deploy
+  --prod` here**. The project's production slot deliberately holds a
+  one-line placeholder — impire-wip.vercel.app says "nothing public
+  here" — because a project's *first* deployment is auto-assigned to
+  production whether you asked or not. If the project is ever recreated,
+  deploy a placeholder first, the site second.
+- Plain `vercel deploy` (a preview) is the protected one. Vercel's
+  review system can hold a fresh deployment in a BLOCKED state that the
+  CLI shows as endless "Building…" — check the Inspect URL on
+  vercel.com if a deploy seems stuck.
+
 ## Design system
 
 One dark world, three hues. Tokens descend from `pra/explainer/index.html`
