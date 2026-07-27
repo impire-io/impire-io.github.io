@@ -63,6 +63,10 @@ Two free-plan traps, learned the hard way:
   review system can hold a fresh deployment in a BLOCKED state that the
   CLI shows as endless "Building…" — check the Inspect URL on
   vercel.com if a deploy seems stuck.
+- Preview deployments are attributed by the HEAD commit's author email,
+  and Vercel BLOCKS previews whose email matches no GitHub account.
+  This repo therefore commits as daan.gerits@gmail.com (repo-local
+  `git config user.email`), the address of the GitHub account.
 
 ## Design system
 
