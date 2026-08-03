@@ -17,7 +17,8 @@
   </a>
   <span class="links">
     <a href="../pra/" data-p="pra">pra</a>
-    <a href="../soulstream/" data-p="soulstream" aria-current="page">soulstream</a>
+    <a href="../soulstream/" data-p="soulstream">soulstream</a>
+    <a href="./" data-p="soulstream" aria-current="page">soulsystem</a>
     <a href="../imps/" data-p="imps">imps</a>
   </span>
 </nav>
@@ -50,88 +51,95 @@
     on plain NATS connections and a record everyone can read.
   </p>
 
-  <!-- the center -->
-  <div class="system-center">
-    <article class="body-card" id="soulstream" style="--a: var(--soulstream)">
-      <p class="role">the center · the record</p>
-      <h3>soulstream <span class="mod">github.com/impire-io/soulstream</span></h3>
-      <p>
-        Everything that happens is written down. Realms, topics, operations — humans and AI
-        applying the <b>same signed changes</b> to shared work, on one log everyone can
-        read. There is no bot API and no human API; a persona is a voice with a key, and the
-        protocol declines to record which kind of mind holds it. Every other body in the
-        system writes here.
-      </p>
-      <div class="foot">
-        <span class="st">status: <i>shipping</i> · v0.7.0 · Go library, CLI, MCP server, remote node</span>
-        <a class="src" href="https://github.com/impire-io/soulstream">code →</a>
-      </div>
-    </article>
-  </div>
+  <!-- the map -->
+  <figure class="map">
+    <svg viewBox="0 0 900 560" role="img" aria-label="A map of the soulsystem: soulstream at the centre with soulidentity, soulrealm, soulfold, and soulnode in orbit.">
+      <defs>
+        <radialGradient id="g-stream"><stop offset="0" stop-color="#a78bfa" stop-opacity=".85"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g-identity"><stop offset="0" stop-color="#f0b429" stop-opacity=".8"/><stop offset="1" stop-color="#f0b429" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g-realm"><stop offset="0" stop-color="#2dd4bf" stop-opacity=".8"/><stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g-fold"><stop offset="0" stop-color="#fb7185" stop-opacity=".8"/><stop offset="1" stop-color="#fb7185" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g-node"><stop offset="0" stop-color="#38bdf8" stop-opacity=".8"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>
+      </defs>
 
-  <!-- the orbit -->
-  <div class="bodies">
-    <article class="body-card" id="soulidentity" style="--a: var(--soulidentity)">
-      <p class="role">in orbit · the name</p>
-      <h3>soulidentity <span class="mod">/soulidentity</span></h3>
-      <p>
-        Who is who. A persona's keys live here — born on first touch, never leaving — and
-        this is where a stranger's credential becomes a scoped one at the door, through the
-        server's own auth callout. <b>No passwords, no per-person database</b>: identity
-        truth stays in your deployment's own directory, and personas are ephemeral.
-      </p>
-      <div class="foot">
-        <span class="st">status: <i>v0.1.0</i> · NATS-native identity plane · signing + auth callout</span>
-        <a class="src" href="https://github.com/impire-io/soulidentity">code →</a>
-      </div>
-    </article>
+      <!-- orbits -->
+      <g class="orbits" fill="none" stroke="#2a3342">
+        <ellipse cx="430" cy="280" rx="150" ry="92"/>
+        <ellipse cx="430" cy="280" rx="255" ry="156"/>
+        <ellipse cx="430" cy="280" rx="360" ry="220"/>
+      </g>
 
-    <article class="body-card" id="soulrealm" style="--a: var(--soulrealm)">
-      <p class="role">in orbit · the room</p>
-      <h3>soulrealm <span class="mod">/soulrealm</span></h3>
-      <p>
-        Where minds actually run. An agent or a tool is a declaration; soulrealm runs it —
-        the <b>same declaration, unchanged</b>, natively on your laptop, inside a microVM,
-        or as a Kubernetes pod. Its whole lifecycle is ordinary operations on the record, so
-        there's no second control plane to keep alive.
-      </p>
-      <div class="foot">
-        <span class="st">status: <i>v0.1.0</i> · three backends run byte-identical declarations · fleet next</span>
-        <a class="src" href="https://github.com/impire-io/soulrealm">code →</a>
-      </div>
-    </article>
+      <!-- the record, at the centre -->
+      <a class="body" href="#soulstream" data-id="soulstream">
+        <circle class="halo" cx="430" cy="280" r="52" fill="url(#g-stream)"/>
+        <circle class="core" cx="430" cy="280" r="10" fill="#a78bfa"/>
+        <text class="lbl-name" x="430" y="322" text-anchor="middle">soulstream</text>
+        <text class="lbl-role" x="430" y="339" text-anchor="middle" fill="#a78bfa">the record · the centre</text>
+      </a>
 
-    <article class="body-card" id="soulfold" style="--a: var(--soulfold)">
-      <p class="role">in orbit · the door</p>
-      <h3>soulfold <span class="mod">/soulfold</span></h3>
-      <p>
-        The door a person walks through. A passkey-first OpenID provider, self-hosted, that
-        stands <b>exactly where Entra or Auth0 would</b> — indistinguishable to anything on
-        the other side. No passwords, ever. Enrolment is by single-use invitation, and the
-        keys it keeps could never impersonate you.
-      </p>
-      <div class="foot">
-        <span class="st">status: <i>v0.2.0</i> · every milestone shipped · passkeys, groups, invites</span>
-        <a class="src" href="https://github.com/impire-io/soulfold">code →</a>
-      </div>
-    </article>
+      <!-- the name -->
+      <a class="body" href="#soulidentity" data-id="soulidentity">
+        <circle class="halo" cx="294" cy="188" r="30" fill="url(#g-identity)"/>
+        <circle class="core" cx="294" cy="188" r="6" fill="#f0b429"/>
+        <text class="lbl-name" x="266" y="184" text-anchor="end">soulidentity</text>
+        <text class="lbl-role" x="266" y="199" text-anchor="end" fill="#f0b429">the name</text>
+      </a>
 
-    <article class="body-card" id="soulnode" style="--a: var(--soulnode)">
-      <p class="role">the inhabited world · the house</p>
-      <h3>soulnode <span class="mod">/soulnode</span></h3>
-      <p>
-        Where the whole system comes down to earth. One binary gathers the record, the name,
-        the room, and the door into a single process on a machine you own.
-        <b><code>soulnode init &amp;&amp; soulnode up</code></b>, paste the token, hand out an
-        invite — and a real person signs in with a passkey and goes to work in a realm, with
-        nothing else to install.
-      </p>
-      <div class="foot">
-        <span class="st">status: <i>v0.2.0</i> · released binaries · linux + macos · one download</span>
-        <a class="src" href="https://github.com/impire-io/soulnode">code →</a>
-      </div>
-    </article>
-  </div>
+      <!-- the room -->
+      <a class="body" href="#soulrealm" data-id="soulrealm">
+        <circle class="halo" cx="663" cy="216" r="30" fill="url(#g-realm)"/>
+        <circle class="core" cx="663" cy="216" r="6.5" fill="#2dd4bf"/>
+        <text class="lbl-name" x="695" y="212" text-anchor="start">soulrealm</text>
+        <text class="lbl-role" x="695" y="227" text-anchor="start" fill="#2dd4bf">the room</text>
+      </a>
+
+      <!-- the door -->
+      <a class="body" href="#soulfold" data-id="soulfold">
+        <circle class="halo" cx="221" cy="372" r="30" fill="url(#g-fold)"/>
+        <circle class="core" cx="221" cy="372" r="6" fill="#fb7185"/>
+        <text class="lbl-name" x="189" y="368" text-anchor="end">soulfold</text>
+        <text class="lbl-role" x="189" y="383" text-anchor="end" fill="#fb7185">the door</text>
+      </a>
+
+      <!-- the house -->
+      <a class="body" href="#soulnode" data-id="soulnode">
+        <circle class="halo" cx="706" cy="446" r="38" fill="url(#g-node)"/>
+        <circle class="core" cx="706" cy="446" r="8" fill="#38bdf8"/>
+        <text class="lbl-name" x="742" y="442" text-anchor="start">soulnode</text>
+        <text class="lbl-role" x="742" y="457" text-anchor="start" fill="#38bdf8">the house</text>
+      </a>
+    </svg>
+    <figcaption>A record at the centre; the name, the room, and the door in orbit; the house gathering all four. Hover a body — or read the key below.</figcaption>
+  </figure>
+
+  <!-- the key -->
+  <ol class="legend">
+    <li class="row" id="soulstream" data-id="soulstream" style="--a: var(--soulstream)">
+      <div class="key"><i class="dot"></i><b>soulstream</b><span class="role">the record</span></div>
+      <p class="desc">Everything that happens is written down — humans and AI applying the <b>same signed changes</b> to shared work, on one log everyone can read. No bot API, no human API. Every other body writes here.</p>
+      <div class="meta"><span class="st"><i>shipping</i> · v0.7.0</span><a class="src" href="https://github.com/impire-io/soulstream">code →</a></div>
+    </li>
+    <li class="row" id="soulidentity" data-id="soulidentity" style="--a: var(--soulidentity)">
+      <div class="key"><i class="dot"></i><b>soulidentity</b><span class="role">the name</span></div>
+      <p class="desc">Who is who. A persona's keys live here — born on first touch, never leaving — and a stranger's credential becomes a scoped one at the door. <b>No passwords, no per-person database.</b></p>
+      <div class="meta"><span class="st"><i>v0.1.0</i> · identity plane</span><a class="src" href="https://github.com/impire-io/soulidentity">code →</a></div>
+    </li>
+    <li class="row" id="soulrealm" data-id="soulrealm" style="--a: var(--soulrealm)">
+      <div class="key"><i class="dot"></i><b>soulrealm</b><span class="role">the room</span></div>
+      <p class="desc">Where minds actually run. An agent or a tool is a declaration; soulrealm runs it — the <b>same declaration, unchanged</b> — natively, in a microVM, or as a Kubernetes pod.</p>
+      <div class="meta"><span class="st"><i>v0.1.0</i> · three backends</span><a class="src" href="https://github.com/impire-io/soulrealm">code →</a></div>
+    </li>
+    <li class="row" id="soulfold" data-id="soulfold" style="--a: var(--soulfold)">
+      <div class="key"><i class="dot"></i><b>soulfold</b><span class="role">the door</span></div>
+      <p class="desc">The door a person walks through. A passkey-first OpenID provider that stands <b>exactly where Entra or Auth0 would</b>. No passwords, ever; enrol by single-use invitation, and an admin console to run it.</p>
+      <div class="meta"><span class="st"><i>v0.3.3</i> · passkeys · console</span><a class="src" href="https://github.com/impire-io/soulfold">code →</a></div>
+    </li>
+    <li class="row" id="soulnode" data-id="soulnode" style="--a: var(--soulnode)">
+      <div class="key"><i class="dot"></i><b>soulnode</b><span class="role">the house</span></div>
+      <p class="desc">Where the whole system comes down to earth. One binary gathers the record, the name, the room, and the door. <b><code>soulnode init &amp;&amp; up</code></b>, and a person signs in with a passkey.</p>
+      <div class="meta"><span class="st"><i>v0.3.1</i> · released binaries</span><a class="src" href="https://github.com/impire-io/soulnode">code →</a></div>
+    </li>
+  </ol>
 
   <p class="system-close">
     <b>Four make the system; the fifth is where you live in it.</b> The record at the
@@ -266,6 +274,20 @@
   window.addEventListener('resize', () => { resize(); if (reduced) draw(0); });
   resize();
   if (reduced) draw(0); else requestAnimationFrame(frame);
+})();
+
+/* link the map's bodies to the key: hovering or focusing one lights both */
+(function () {
+  const byId = id => document.querySelectorAll('[data-id="' + id + '"]');
+  document.querySelectorAll('.map .body, .legend .row').forEach(el => {
+    const id = el.getAttribute('data-id');
+    const on = () => byId(id).forEach(n => n.classList.add('hot'));
+    const off = () => byId(id).forEach(n => n.classList.remove('hot'));
+    el.addEventListener('pointerenter', on);
+    el.addEventListener('pointerleave', off);
+    el.addEventListener('focusin', on);
+    el.addEventListener('focusout', off);
+  });
 })();
 </script>
 
