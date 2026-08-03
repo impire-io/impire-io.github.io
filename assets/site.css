@@ -13,6 +13,11 @@
   --pra: #5eb1ff;
   --soulstream: #a78bfa;
   --imps: #fb923c;
+  /* the soulsystem — five bodies, the record at the center */
+  --soulidentity: #f0b429;
+  --soulrealm:    #2dd4bf;
+  --soulfold:     #fb7185;
+  --soulnode:     #38bdf8;
   --a: var(--ink-dim); /* page accent; overridden per page */
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --serif: "Iowan Old Style", Charter, Georgia, Cambria, "Times New Roman", serif;
@@ -359,6 +364,63 @@ a:focus-visible, button:focus-visible {
 }
 .book-pager .next { margin-left: auto; text-align: right; }
 
+/* ---------- soulsystem (the soul-family map) ---------- */
+.system { max-width: 1080px; margin: 0 auto; padding: 8px 28px 8px; }
+.system > p.lede {
+  max-width: 60ch; margin: 0 0 8px; color: var(--ink-dim); font-size: 1.02rem;
+}
+.system > p.lede b { color: var(--ink); font-weight: 600; }
+
+/* the center body — soulstream, full width */
+.body-card {
+  --a: var(--ink-dim);
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 26px 26px 22px;
+  background: var(--bg-raise);
+  overflow: hidden;
+}
+.body-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(420px 200px at 0% 0%, color-mix(in srgb, var(--a) 9%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.body-card > * { position: relative; }
+.body-card .role {
+  font: 0.72rem var(--mono); text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--a); margin: 0 0 12px;
+}
+.body-card h3 {
+  margin: 0 0 10px; font-size: 1.4rem; letter-spacing: -0.02em; line-height: 1.15;
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.body-card h3 .mod { font: 0.72rem var(--mono); color: var(--ink-faint); letter-spacing: 0; }
+.body-card p { margin: 0 0 16px; color: var(--ink-dim); font-size: 0.96rem; }
+.body-card p b { color: var(--ink); font-weight: 600; }
+.body-card .foot {
+  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  border-top: 1px solid var(--line); padding-top: 14px;
+}
+.body-card .st { font: 0.72rem var(--mono); color: var(--ink-faint); letter-spacing: 0.03em; }
+.body-card .st i { font-style: normal; color: var(--a); }
+.body-card .src {
+  margin-left: auto; font: 600 0.76rem var(--mono); text-decoration: none; color: var(--a);
+}
+.body-card .src:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.system-center { margin: 20px 0; }
+.system-center .body-card { border-color: color-mix(in srgb, var(--a) 40%, var(--line)); }
+
+.bodies {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 0 0 8px;
+}
+.system-close {
+  max-width: 62ch; margin: 30px 0 0; color: var(--ink-dim);
+}
+.system-close b { color: var(--ink); font-weight: 600; }
+
 /* ---------- footer ---------- */
 footer {
   max-width: 1080px; margin: 0 auto;
@@ -381,6 +443,7 @@ footer .meta span { display: block; margin-bottom: 6px; }
   .band .motif { justify-self: start; }
   .hero { min-height: 74vh; }
   .hero--sub { min-height: 58vh; }
+  .bodies { grid-template-columns: 1fr; }
   footer .meta { text-align: left; }
 }
 
