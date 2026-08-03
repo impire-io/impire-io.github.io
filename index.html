@@ -17,7 +17,6 @@
   </a>
   <span class="links">
     <a href="./pra/" data-p="pra">pra</a>
-    <a href="./soulstream/" data-p="soulstream">soulstream</a>
     <a href="./soulsystem/" data-p="soulstream">soulsystem</a>
     <a href="./imps/" data-p="imps">imps</a>
   </span>
@@ -99,22 +98,21 @@
   </div>
 </section>
 
-<section class="band" data-p="soulstream" id="soulstream">
+<section class="band" data-p="soulstream" id="soulsystem">
   <div class="inner">
     <div>
-      <p class="eyebrow">soulstream · collaboration</p>
+      <p class="eyebrow">soulsystem · collaboration</p>
       <h2>One workbench, every kind of mind.</h2>
       <p class="body">
-        Soulstream is a protocol, not a platform: realms, topics, and operations that
-        humans and AI apply to shared work, each one <b>signed by whoever did it</b>.
-        There is no bot API, because there is no separate door for bots. It ships today
-        as a Go library, a CLI, and an MCP server.
+        The soulsystem is a protocol with the components that make it real, not a
+        platform: humans and AI apply operations to shared work, each one <b>signed by
+        whoever did it</b>. There is no bot API, because there is no separate door for
+        bots. At its center is <b>soulstream</b>, the record everything writes to.
       </p>
       <p class="body">
-        It has since become the record at the heart of a growing <b>soulsystem</b> — five
-        open components with a signed log at the center and a single binary that gathers
-        them all: <b>download, <code>init</code>, <code>up</code></b>, and a real person
-        signs in with a passkey.
+        Around it, four more open components — the name, the room, the door — and a single
+        binary that gathers them all: <b>download, <code>init</code>, <code>up</code></b>,
+        and a real person signs in with a passkey and goes to work in a realm.
       </p>
       <p class="status">status: <i>shipping</i> · v0.7.0 · a five-part soulsystem · MIT</p>
       <a class="enter enter--solid" href="./soulsystem/" aria-label="See the soulsystem">See the soulsystem →</a>
@@ -188,13 +186,13 @@
   const css = getComputedStyle(document.documentElement);
   const HUES = {
     pra:        css.getPropertyValue('--pra').trim(),
-    soulstream: css.getPropertyValue('--soulstream').trim(),
+    soulsystem: css.getPropertyValue('--soulstream').trim(),
     imps:       css.getPropertyValue('--imps').trim(),
   };
 
   const NODES = [
     { id: 'pra',        label: 'pra',        x: 0.56, y: 0.26, r: 4.5, ph: 0.0 },
-    { id: 'soulstream', label: 'soulstream', x: 0.82, y: 0.48, r: 5.0, ph: 1.7 },
+    { id: 'soulsystem', label: 'soulsystem', x: 0.82, y: 0.48, r: 5.0, ph: 1.7 },
     { id: 'imps',       label: 'imps',       x: 0.52, y: 0.66, r: 4.0, ph: 4.6 },
   ];
   const EDGES = [[0, 1], [1, 2], [2, 0]];
