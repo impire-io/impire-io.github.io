@@ -1,0 +1,25 @@
+---
+interface Props {
+  /** which top-level section is current: 'soulsystem' | 'research' | 'about' */
+  active?: string;
+}
+const { active } = Astro.props;
+const link = (href: string, label: string, key: string) => ({ href, label, key });
+const links = [
+  link('/soulsystem/', 'soulsystem', 'soulsystem'),
+  link('/research/', 'research', 'research'),
+  link('/about/', 'about', 'about'),
+];
+---
+<nav class="nav" aria-label="impire sections">
+  <a class="wordmark" href="/"><b>impire</b><span class="tld">.io</span>
+    <span class="dots" aria-hidden="true">
+      <i style="background:var(--soulstream-bright)"></i><i style="background:var(--soulidentity-bright)"></i><i style="background:var(--soulrealm-bright)"></i><i style="background:var(--soulfold-bright)"></i><i style="background:var(--soulnode-bright)"></i>
+    </span>
+  </a>
+  <span class="links">
+    {links.map((l) => (
+      <a href={l.href} data-p={l.key} aria-current={active === l.key ? 'page' : undefined}>{l.label}</a>
+    ))}
+  </span>
+</nav>

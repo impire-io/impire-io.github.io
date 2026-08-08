@@ -1,0 +1,36 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Analytics from '../components/Analytics.astro';
+import Seo from '../components/Seo.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** page accent: sets body[data-p] */
+  project?: string;
+  /** current nav section */
+  active?: string;
+  /** page-specific footer note */
+  footerNote?: string;
+  /** suppress the shared footer (pages that render their own) */
+  noFooter?: boolean;
+}
+const { title, description, project, active, footerNote, noFooter } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo title={title} description={description} />
+  </head>
+  <body data-p={project}>
+    <SiteNav active={active} />
+    <slot />
+    {!noFooter && <SiteFooter note={footerNote} />}
+    <Analytics />
+  </body>
+</html>

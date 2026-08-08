@@ -1,0 +1,18 @@
+---
+// GoatCounter, guarded: only the production hostname ever loads the counter,
+// and Do-Not-Track / Global Privacy Control are honored (stricter than
+// GoatCounter's own default). Dev, preview, and localhost make zero
+// analytics requests. count.js is vendored (public/js/count.js) so the only
+// external request the site makes is the count beacon itself.
+---
+<script is:inline>
+  (function () {
+    if (location.hostname !== 'impire.io') return;
+    if (navigator.doNotTrack === '1' || window.globalPrivacyControl) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = '/js/count.js';
+    s.setAttribute('data-goatcounter', 'https://impire.goatcounter.com/count');
+    document.head.appendChild(s);
+  })();
+</script>
