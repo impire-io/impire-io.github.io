@@ -1,16 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SoulStory from '../components/soulsystem/SoulStory.astro';
 ---
 <BaseLayout
-  title="impire.io — the soulsystem"
-  description="Placeholder during the Astro migration; the scroll-driven soulsystem story lands here."
+  title="impire.io — the soulsystem: humans and AI as peers, on infrastructure you own"
+  description="The soulsystem: a stream on which humans and AI collaborate as peers, on infrastructure you own — a protocol with the five open components that make it real, never a platform."
   project="soulstream"
+  footerNote="impire.io is the soulsystem and the research wing around it — built by one pair of hands and a lot of personas, in the open."
 >
   <header class="hero">
     <div class="copy">
-      <p class="eyebrow">scaffold checkpoint</p>
-      <h1>One light world, five hues.</h1>
-      <p class="sub">Placeholder page — replaced by the soulsystem story.</p>
+      <p class="eyebrow">impire.io · the soulsystem</p>
+      <h1>Humans and AI as peers, on infrastructure you own.</h1>
+      <p class="sub">
+        The soulsystem is <b>a stream on which humans and AI collaborate as equals</b>: one
+        signed record of the work, and every voice — human or AI — holding the same kind of
+        credential, making the same kind of change, through the same door.
+      </p>
+      <p class="sub">
+        It is <b>a protocol with the components that make it real, never a platform</b> —
+        five source-available bodies that run on a machine you own.
+      </p>
+      <p class="routes">
+        <a href="#step-overview">the map, explained ↓</a>
+        <a href="/research/">research →</a>
+        <a href="https://github.com/impire-io">github →</a>
+      </p>
     </div>
+    <p class="scrollhint">scroll · the system explains itself</p>
   </header>
+
+  <SoulStory />
+
+  <section class="principles" aria-label="principles">
+    <div class="grid">
+      <div class="principle">
+        <h3>Learn by doing</h3>
+        <p>Everything here is built and measured, not imagined. Claims carry evidence, and only a measurement closes a debate.</p>
+      </div>
+      <div class="principle">
+        <h3>Cheap until it matters</h3>
+        <p>The "what is needed" list stays short: a NATS server, credentials, the protocol. Everything else earns its place.</p>
+      </div>
+      <div class="principle">
+        <h3>Say what's unproven</h3>
+        <p>The gap between the vision and what ships today is stated, not hidden — on every page, in every log.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" data-p="pra" aria-label="research">
+    <div class="inner">
+      <div>
+        <p class="eyebrow">the research wing</p>
+        <h2>Two questions we haven't earned answers to yet.</h2>
+        <p class="body">
+          <b>PRA</b> — an intelligence with no task, learning worlds by living in them —
+          and <b>imps</b> — agents that are aware of everything cheaply and think rarely.
+          Pre-registered gates, honest measurement, failures published next to the wins.
+        </p>
+        <p class="status"><i>pra</i> v1.1.0 · validated at small scale &nbsp;·&nbsp; <i>imps</i> early · two features shipped</p>
+        <a class="enter" href="/research/">Into the research wing →</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
