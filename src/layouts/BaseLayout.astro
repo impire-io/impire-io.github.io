@@ -18,14 +18,20 @@ interface Props {
   footerNote?: string;
   /** suppress the shared footer (pages that render their own) */
   noFooter?: boolean;
+  /** og:type — book chapters are articles */
+  ogType?: 'website' | 'article';
+  /** og image filename under /og/ */
+  ogImage?: string;
+  /** page-specific JSON-LD nodes (see src/lib/jsonld.ts) */
+  schema?: object[];
 }
-const { title, description, project, active, footerNote, noFooter } = Astro.props;
+const { title, description, project, active, footerNote, noFooter, ogType, ogImage, schema } = Astro.props;
 ---
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <Seo title={title} description={description} />
+    <Seo title={title} description={description} type={ogType} ogImage={ogImage} schema={schema} />
   </head>
   <body data-p={project}>
     <SiteNav active={active} />

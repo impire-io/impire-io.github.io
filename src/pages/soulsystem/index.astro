@@ -2,6 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SoulMap from '../../components/soulsystem/SoulMap.astro';
 import { BODIES } from '../../data/soulsystem';
+import { software } from '../../lib/jsonld';
+
+const schema = BODIES.map((b) =>
+  software({ name: b.name, description: b.oneLiner, repo: b.repo, version: b.version }),
+);
 
 // page-voice descriptions for the key; substance stays in the data module
 const descs: Record<string, string> = {
@@ -22,6 +27,8 @@ const descs: Record<string, string> = {
   description="The soulsystem: five open components with a signed record at the center — the record, the name, the room, the door, and the house that gathers them into one binary."
   project="soulstream"
   active="soulsystem"
+  ogImage="soulsystem.png"
+  schema={schema}
 >
   <header class="hero hero--sub" id="top">
     <div class="copy">

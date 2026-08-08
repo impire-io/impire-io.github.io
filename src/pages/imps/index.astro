@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { software } from '../../lib/jsonld';
 ---
 <BaseLayout
   title="imps — an agent you don't drive"
+  schema={[software({ name: 'imps', description: 'A Go framework for building small, awareness-driven autonomous agents on NATS; the awareness/thinking boundary is compiler-enforced.', repo: 'https://github.com/impire-io/imps' })]}
   description="imps is a Go framework for building small, awareness-driven autonomous agents on NATS. An agent you don't drive."
   project="imps"
   active="research"

@@ -1,15 +1,44 @@
 ---
-// Canonical + descriptive meta. Grows OG/Twitter/JSON-LD and the markdown
-// alternate link in the agent-accessibility pass; keep all head meta here so
-// pages never hand-roll it.
+// All head meta lives here so pages never hand-roll it: canonical, the
+// markdown mirror advertisement, OG/Twitter cards, favicons, and one JSON-LD
+// @graph per page. Mirror URLs follow the build convention: directory pages
+// get <path>index.md, flat .html pages get <slug>.md (see
+// scripts/build-mirrors.mjs, which generates them from the built HTML).
+import { graph } from '../lib/jsonld';
+
 interface Props {
   title: string;
   description: string;
+  /** og:type; articles are book chapters */
+  type?: 'website' | 'article';
+  /** path under /og/, e.g. 'soulsystem.png' */
+  ogImage?: string;
+  /** page-specific JSON-LD nodes appended to the Organization+WebSite graph */
+  schema?: object[];
 }
-const { title, description } = Astro.props;
+const { title, description, type = 'website', ogImage = 'default.png', schema = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const mirror = Astro.url.pathname.endsWith('.html')
+  ? Astro.url.pathname.replace(/\.html$/, '.md')
+  : `${Astro.url.pathname.replace(/\/$/, '')}/index.md`;
+const og = new URL(`/og/${ogImage}`, Astro.site);
+const jsonLd = JSON.stringify(graph(...schema));
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+<link rel="alternate" type="text/markdown" href={mirror} title="Markdown version of this page" />
+<meta property="og:site_name" content="impire.io" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content={type} />
+<meta property="og:image" content={og} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={og} />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#f8f7fb" />
+<script type="application/ld+json" set:html={jsonLd} />

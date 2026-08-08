@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { software } from '../../lib/jsonld';
 ---
 <BaseLayout
   title="PRA — an intelligence with no task"
+  ogImage="pra.png"
+  schema={[software({ name: 'PRA — Pose Resolution Architecture', description: 'An AI that learns a world by doing, not by being told: no labels, no dataset, no task. Python, one dependency, runs on a laptop.', repo: 'https://github.com/impire-io/poseres', version: 'v1.1.0' })]}
   description="PRA — Pose Resolution Architecture — is an AI that learns a world by doing, not by being told. No labels, no dataset, no task."
   project="pra"
   active="research"

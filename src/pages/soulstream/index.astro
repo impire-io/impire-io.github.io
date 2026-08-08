@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { software } from '../../lib/jsonld';
 ---
 <BaseLayout
   title="Soulstream — one protocol, no second door"
+  schema={[software({ name: 'soulstream', description: 'A protocol for humans and AI to collaborate through operations applied to topics; Go library, CLI, and MCP server.', repo: 'https://github.com/impire-io/soulstream', version: 'v0.7.0' })]}
   description="Soulstream is a protocol for humans and AI to collaborate through operations applied to topics. One protocol, no second door."
   project="soulstream"
   active="soulsystem"
