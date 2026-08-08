@@ -1,92 +1,84 @@
 # impire.io
 
-The website for the impire constellation: a home page and three sub-sites
-(pra, soulstream, imps).
+The website: the soulsystem as the main story, with PRA and imps under the
+research wing. Astro static build, one light theme, no external requests
+except the GoatCounter beacon (and only in production).
 
-## How it's built
-
-By hand. HTML pages sharing one stylesheet, no framework, no external
-requests (no webfonts, no analytics, no CDN). Deploy by copying the
-directory to any static host — nothing needs to run.
+## Build
 
 ```
-index.html              the constellation (home)
-assets/site.css         shared design system
-pra/index.html          sub-site: PRA
-pra/how-it-works.html   PRA's interactive explainer (self-contained, from the pra repo)
-pra/book/               the PRA book, published as a draft (generated, see below)
-soulstream/index.html   sub-site: soulstream
-imps/index.html         sub-site: imps
-tools/build-book.py     regenerates pra/book/ from the pra repo's book/ markdown
+npm ci
+npm run dev        # local dev server on :4321
+npm run build      # dist/ = astro build + scripts/build-mirrors.mjs
 ```
 
-The one exception to "by hand" is `pra/book/`: a contents page, twelve
-chapter pages, and a glossary, generated from `../pra/book/*.md` by
-`tools/build-book.py` (stdlib Python, run it whenever the book changes).
-The script keeps the chapter text verbatim — it asserts the visible text
-of every generated page matches the markdown — and stamps each page with
-a draft notice. The book is published as a draft on purpose: the pra
-repo's own rule (journey episode 0047) is that no empirical claim is
-final before a numbers audit re-verifies it, and that audit hasn't run
-yet. The draft labels come off when it has.
+The postbuild script derives, from the built HTML (so nothing can drift):
+markdown mirrors for every page (`/<page>/index.md`, `/pra/book/<slug>.md`),
+`/llms.txt`, `/llms-full.txt`, and `/sitemap.xml`.
 
-## Deploying, and the WIP preview
-
-Production is GitHub Pages: pushing `main` publishes to impire.io.
-Nothing goes live until you push.
-
-The work-in-progress site lives behind a login on Vercel (project
-`impire-wip`, no custom domain — impire.io never points there). From
-this directory:
+Gates (both run in CI, both must be green):
 
 ```
-vercel deploy
+python3 tools/check-site.py dist   # every pre-Astro URL still resolves + link check
+sh scripts/verify-dist.sh          # llms.txt/mirrors/canonical/OG/JSON-LD surface
 ```
 
-uploads the working tree as-is — committed or not — and prints a
-`*.vercel.app` URL that only the project owner's Vercel login can open
-(unauthenticated visitors are redirected to Vercel SSO; this is the
-project's default "Standard Protection", don't turn it off). To show a
-WIP state to someone else, use a shareable link from the deployment's
-page on vercel.com — time-limited, no account needed on their end.
+## The book
 
-Two free-plan traps, learned the hard way:
+`src/content/book/` is vendored verbatim from the sibling `../pra/book` by
 
-- Production deployments are NOT behind the login (Vercel Authentication
-  doesn't cover production on this plan), so **never `vercel deploy
-  --prod` here**. The project's production slot deliberately holds a
-  one-line placeholder — impire-wip.vercel.app says "nothing public
-  here" — because a project's *first* deployment is auto-assigned to
-  production whether you asked or not. If the project is ever recreated,
-  deploy a placeholder first, the site second.
-- Plain `vercel deploy` (a preview) is the protected one. Vercel's
-  review system can hold a fresh deployment in a BLOCKED state that the
-  CLI shows as endless "Building…" — check the Inspect URL on
-  vercel.com if a deploy seems stuck.
-- Preview deployments are attributed by the HEAD commit's author email,
-  and Vercel BLOCKS previews whose email matches no GitHub account.
-  This repo therefore commits as daan.gerits@gmail.com (repo-local
-  `git config user.email`), the address of the GitHub account.
+```
+python3 tools/sync-book.py
+```
+
+Run it when the book changes upstream and commit the result; CI never needs
+the pra repository. Chapter text fidelity is byte-checked (smartypants is off
+for this reason). The interactive explainer ships verbatim at
+`public/pra/how-it-works.html`; its source of truth is `../pra/explainer/`.
 
 ## Design system
 
-One dark world, three hues. Tokens descend from `pra/explainer/index.html`
-(the first shipped piece of the visual language). Each sub-site sets
-`data-p` on `<body>`, which selects its accent through `--a`; everything
-else derives from the shared tokens. Each hero carries a small ambient
-canvas in the project's hue: rival maps for pra, braiding streams for
-soulstream, sparks and one flame for imps.
-All motion respects `prefers-reduced-motion`.
+Light only — "one light world, five hues" (`src/styles/tokens.css`): paper
+with a violet cast, and per-project hue pairs. The deep hue is for text,
+eyebrows, strokes, and focus rings (every value clears 4.5:1 on the paper);
+the `-bright` partner is for fills, halos, and washes — never text. Display
+type is Bricolage Grotesque (self-hosted via `@fontsource-variable`); body
+stays on system stacks. Mono eyebrows are the brand carry-over from the dark
+era.
 
-## Copy
+The homepage scroll story lives in
+`src/components/soulsystem/{SoulMap,SoulStory}.astro`, driven by
+`src/data/soulsystem.ts` (geometry, hues, zooms, statuses — the single source
+for the map, the story, and the reference legend). Step copy is
+`src/content/story/*.md`. Everything degrades: no JS renders the full
+document, reduced motion gets zero transforms.
 
-The copy contract is `pra/book/STYLE.md` in the pra repository: write from
-the specific, no hype, and every page says plainly what does not work or
-exist yet. PRA's page is `pra/website-copy.md` nearly verbatim; the other
-two were written to the same shape and checked against the repos they
-describe.
+## Deploy
 
-`pra/how-it-works.html` is a copy of `pra/explainer/index.html` and should
-be refreshed from there when the explainer changes. `pra/book/` is
-generated from `../pra/book/` and should be regenerated
-(`python3 tools/build-book.py`) when a chapter changes.
+**Production is GitHub Pages via Actions** (`.github/workflows/deploy.yml`):
+push `main` → build → gates → deploy-pages. The custom domain (impire.io) and
+HTTPS live in the repo's Pages settings — there is no CNAME file anymore.
+Repo setting required once: *Settings → Pages → Source: GitHub Actions*.
+
+**WIP preview is Vercel**, project `impire-wip`, behind Vercel's SSO:
+
+```
+vercel deploy      # never --prod: production isn't behind the login
+```
+
+Vercel auto-detects Astro; previews are attributed by the HEAD commit's
+author email (this repo commits as daan.gerits@gmail.com, repo-local config).
+Preview deployments send `X-Robots-Tag: noindex` on Vercel's side.
+
+## Analytics
+
+GoatCounter, guarded (`src/components/Analytics.astro`): only the
+`impire.io` hostname loads the vendored `public/js/count.js`, DNT/GPC are
+honored, and dev/preview/localhost make zero analytics requests. Events:
+`ext-github-<repo>` outbound clicks and `soulsystem-story-completed`.
+Dashboard: https://impire.goatcounter.com.
+
+## License
+
+Source-available under the Sustainable Use License (fair-code) — see
+`LICENSE` and https://impire.io/license/.

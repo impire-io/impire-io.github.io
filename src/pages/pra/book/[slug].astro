@@ -25,6 +25,7 @@ export async function getStaticPaths() {
 const { entry, chapterCount, prev, next } = Astro.props;
 const { Content } = await render(entry);
 const isGlossary = entry.data.kind === 'glossary';
+const servedPath = `/pra/book/${entry.id}.html`;
 const sourceUrl = `https://github.com/impire-io/poseres/blob/main/book/${entry.data.src}`;
 const title = isGlossary
   ? 'Glossary — the PRA book'
@@ -40,7 +41,8 @@ const description = isGlossary
   active="research"
   ogType="article"
   ogImage="book.png"
-  schema={[article({ headline: title, description, url: new URL(Astro.url.pathname, Astro.site).href })]}
+  path={servedPath}
+  schema={[article({ headline: title, description, url: new URL(servedPath, Astro.site).href })]}
   noFooter
 >
   <main class="book">
