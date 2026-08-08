@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { software } from '../../lib/jsonld';
+---
+<BaseLayout
+  title="imps — an agent you don't drive"
+  schema={[software({ name: 'imps', description: 'A Go framework for building small, awareness-driven autonomous agents on NATS; the awareness/thinking boundary is compiler-enforced.', repo: 'https://github.com/impire-io/imps' })]}
+  description="imps is a Go framework for building small, awareness-driven autonomous agents on NATS. An agent you don't drive."
+  project="imps"
+  active="research"
+  footerNote="imps is part of the research wing. The vision is bigger than what ships today, and the gap between the two is stated, not hidden."
+>
+  <header class="hero hero--sub">
+    <div class="copy">
+      <p class="eyebrow">research · imps · autonomous agents</p>
+      <h1>An agent you don't drive.</h1>
+      <p class="sub">
+        You're in a loud room. Dozens of conversations, music, the clatter of glasses, and
+        you are thinking about none of it. Your ears take in everything; the sound washes
+        straight past. Then, somewhere across the room, someone says your name. You snap
+        around. Nothing changed about the noise. <b>Something changed about your
+        attention.</b>
+      </p>
+      <p class="sub">
+        That gap between hearing everything and thinking about almost none of it is the most
+        useful trick your brain has. It runs cheaply, all the time, and it spends real effort
+        only on the rare thing that earns it. An imp is built around that trick.
+      </p>
+    </div>
+  </header>
+
+  <main class="prose">
+    <p>
+      Most things called agents today are tools you drive. Claude Code, Hermes, pi.dev: you
+      open them, you type, they work, then they wait for you to type again. Genuinely useful,
+      and not autonomous. Nothing happens until a person picks up the controls.
+    </p>
+    <p>
+      An imp is meant to run on its own. It is small, watches one slice of the world, and
+      reads everything that crosses it for almost nothing. It reaches for real thought only
+      when what it saw crosses a line worth acting on. No one is driving.
+    </p>
+    <p>
+      <strong>imps</strong> is a Go framework for building agents shaped that way, running on
+      NATS. You give an imp its inbound channels, a cheap awareness function that runs on
+      every message, an expensive thinking function that runs only when awareness decides a
+      message has earned it, and a little local memory. The framework wires up the
+      subscriptions, the dispatch, and the outbound sends.
+    </p>
+    <p>
+      This is early. Two features are shipped, both with a real test suite. What runs today
+      is the core of the idea; the rest of the vision below is honestly still ahead.
+    </p>
+
+    <h3>Awareness is cheap; thinking is expensive</h3>
+    <p>
+      Awareness runs on every single message. It stays local and bounded, and it returns one
+      of three verdicts: ignore this, hold a note about it, or escalate it to thinking. Most
+      messages get ignored, and ignoring is nearly free. Thinking runs only on escalation,
+      and thinking is where the expensive work lives: model calls, multi-step tool use,
+      recall over a large corpus. Because thinking runs rarely, an imp can pay attention to a
+      firehose and still cost almost nothing most of the time.
+    </p>
+
+    <h3>The compiler enforces the line</h3>
+    <p>
+      This is the part that makes it real rather than a good intention. The boundary between
+      cheap awareness and expensive thinking is not a rule you are trusted to remember. It is
+      built into the types. The context awareness runs in can issue one request and wait for
+      one reply, and that is all it can do. It has no way to fan out, no way to fire off a
+      publish, no way to grab the raw connection. <strong>Awareness code that tries to
+      publish does not compile.</strong>
+    </p>
+    <p>
+      The test suite proves it from the outside. Three build configurations exist whose only
+      job is to fail to compile; if any of them ever builds, that is caught as a regression.
+      You cannot accidentally make awareness expensive, because the expensive surface is not
+      there to reach for.
+    </p>
+
+    <h3>One imp does one thing</h3>
+    <p>
+      A complaint-watcher watches incoming email for complaints. It does not also chase late
+      invoices. If you want both, you build two imps. The reason is practical: a specialist
+      has a small, known surface, which makes it cheap to test, cheap to reason about, and
+      cheap to run. The intended payoff is many small imps cooperating to produce something
+      no single one could, each simple on its own.
+    </p>
+
+    <h3>What's true today</h3>
+    <p>
+      <strong>Shipped.</strong> The core surface: channels that decode inbound NATS messages
+      and route them by entity, the awareness and thinking functions with the
+      compiler-enforced split between them, per-entity local memory, and the outbound sends
+      (a single request-and-reply, fan-out request-to-many, and fire-and-forget publish). A
+      runnable echo example. A test suite that runs under the race detector alongside the
+      compile-must-fail checks. Go 1.25 or newer, with one runtime dependency,
+      <code>nats.go</code>. The license is fair-code, under the Sustainable Use License.
+    </p>
+    <p>
+      <strong>Not built yet.</strong> The parts that turn one imp into a colony. Sleeping
+      when idle and waking on a message, so an imp with nothing to do costs no compute, is
+      designed and not written. The capability services an imp reaches for while thinking,
+      for inference and knowledge and tools, are designed and not written. Coordination
+      between imps over a shared stream is designed and not written. Today you can build one
+      imp and run it against NATS; the always-on, self-suspending, cooperating colony is the
+      direction, not the current state.
+    </p>
+
+    <h3>Build one</h3>
+    <p>
+      <code>go get</code> the module, write the five parts, point it at a NATS server. The
+      echo imp that subscribes to one subject and republishes to another is about forty
+      lines, and it comes with a test that runs an embedded server so you can watch it work
+      before you wire it to anything.
+    </p>
+  </main>
+
+  <div class="ctarow">
+    <a class="enter enter--solid" href="https://github.com/impire-io/imps">Get the code →</a>
+    <a class="enter" href="https://github.com/impire-io/imps#readme">Read the docs →</a>
+  </div>
+  <p class="micro">fair-code · Go 1.25+ · one runtime dependency (nats.go) · early, and built in the open</p>
+</BaseLayout>

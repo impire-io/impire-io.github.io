@@ -1,0 +1,231 @@
+---
+// The scroll-driven soulsystem story. Seven always-visible steps in document
+// order (the no-JS/crawler rendering IS the content); an IntersectionObserver
+// sets data-focus on the root, and CSS does the rest. The map zoom is a
+// precomputed translate–scale–translate on the SVG's .world group — no
+// runtime math, no dependencies.
+import { getCollection, render } from 'astro:content';
+import SoulMap from './SoulMap.astro';
+import { BODIES, focusTransform } from '../../data/soulsystem';
+
+const entries = (await getCollection('story')).sort((a, b) => a.data.order - b.data.order);
+const steps = await Promise.all(
+  entries.map(async (e) => ({ ...e.data, Content: (await render(e)).Content })),
+);
+const bodyById = new Map(BODIES.map((b) => [b.id, b]));
+const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; ');
+---
+<section class="story" data-focus="overview" style={tfVars} aria-label="the soulsystem, explained">
+  <figure class="story__map">
+    <SoulMap mode="story" />
+  </figure>
+  <div class="story__steps">
+    {steps.map((s) => {
+      const body = bodyById.get(s.step);
+      return (
+        <section class="step" id={`step-${s.step}`} data-step={s.step}>
+          <p class="eyebrow" style={body ? `color: var(--${body.hue})` : undefined}>{s.eyebrow}</p>
+          <h2>{s.title}</h2>
+          <div class="step__body">
+            <s.Content />
+          </div>
+          {body && (
+            <p class="step__meta">
+              <span class="st"><i style={`color: var(--${body.hue})`}>{body.version}</i> · {body.status}</span>
+              <a class="src" style={`color: var(--${body.hue})`} href={body.repo}>code →</a>
+            </p>
+          )}
+          {s.step === 'all' && (
+            <p class="step__cta">
+              <a class="enter enter--solid" href="https://github.com/impire-io/soulnode">Get soulnode →</a>
+              <a class="enter" href="/soulsystem/">Study the map →</a>
+              <a class="enter" href="/soulstream/">Start with the record →</a>
+            </p>
+          )}
+        </section>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: 56% minmax(0, 1fr);
+    gap: 56px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  .story__map {
+    position: sticky;
+    top: var(--nav-h);
+    height: min(84vh, 660px);
+    align-self: start;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .story__map :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .step {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-margin-top: var(--nav-h);
+  }
+  .step h2 {
+    margin: 0 0 14px;
+    font-size: clamp(1.6rem, 3vw, 2.15rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 620;
+    text-wrap: balance;
+  }
+  .step .eyebrow { margin-bottom: 12px; }
+  .step__body :global(p) { margin: 0 0 14px; color: var(--ink-dim); }
+  .step__body :global(p b), .step__body :global(p strong) { color: var(--ink); font-weight: 600; }
+  .step__body :global(pre) {
+    margin: 0 0 14px; padding: 13px 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: 0.85rem/1.5 var(--mono);
+    overflow-x: auto;
+  }
+  .step__body :global(code) { font-family: var(--mono); font-size: 0.9em; }
+  .step__meta {
+    margin: 4px 0 0;
+    font: 0.74rem var(--mono);
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    display: flex; gap: 16px; align-items: baseline;
+  }
+  .step__meta i { font-style: normal; }
+  .step__meta .src { font-weight: 600; text-decoration: none; }
+  .step__meta .src:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .step__cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0 0; }
+
+  @media (max-width: 860px) {
+    .story { display: block; }
+    .story__map {
+      top: 0;
+      height: min(44vh, 46svh);
+      background: var(--bg);
+      z-index: 2;
+    }
+    .step { min-height: 72vh; }
+  }
+  @media (max-height: 500px) {
+    .story__map { position: static; height: auto; }
+  }
+</style>
+
+<style is:global>
+  /* ---- the story's state machine (global: it reaches into the map SVG) ---- */
+
+  .story .world {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .story[data-focus='soulstream'] .world   { transform: var(--tf-soulstream); }
+  .story[data-focus='soulidentity'] .world { transform: var(--tf-soulidentity); }
+  .story[data-focus='soulrealm'] .world    { transform: var(--tf-soulrealm); }
+  .story[data-focus='soulfold'] .world     { transform: var(--tf-soulfold); }
+  .story[data-focus='soulnode'] .world     { transform: var(--tf-soulnode); }
+
+  .story .body, .story .orbits ellipse { transition: opacity 0.35s; }
+  .story .lbl-name, .story .lbl-role { transition: opacity 0.35s; }
+
+  /* while a body is focused: labels off, others dimmed, orbits faded */
+  .story:not([data-focus='overview']):not([data-focus='all']) :is(.lbl-name, .lbl-role) { opacity: 0; }
+  .story:not([data-focus='overview']):not([data-focus='all']) .orbits ellipse { opacity: 0.2; }
+  .story[data-focus='soulstream'] .body:not(.body--soulstream),
+  .story[data-focus='soulidentity'] .body:not(.body--soulidentity),
+  .story[data-focus='soulrealm'] .body:not(.body--soulrealm),
+  .story[data-focus='soulfold'] .body:not(.body--soulfold) { opacity: 0.15; }
+  /* the house keeps the system in frame — dim gently, it is gathering them */
+  .story[data-focus='soulnode'] .body:not(.body--soulnode) { opacity: 0.45; }
+
+  .story .gather line { transition: opacity 0.5s, stroke-dashoffset 0.9s ease 0.15s; }
+  .story[data-focus='soulnode'] .gather line { opacity: 0.85; stroke-dashoffset: 0; }
+  .story[data-focus='all'] .gather line { opacity: 0.3; stroke-dashoffset: 0; }
+
+  /* step dimming exists only once JS arrives; without it nothing is dimmed */
+  .story--enhanced .step { opacity: 0.4; transition: opacity 0.3s; }
+  .story--enhanced .step.is-active { opacity: 1; }
+
+  /* reduced motion: no zoom, no panning, no draw-on — instant opacity states */
+  .story--reduced .world { transform: none !important; transition: none !important; }
+  .story--reduced .body, .story--reduced .orbits ellipse,
+  .story--reduced .lbl-name, .story--reduced .lbl-role,
+  .story--reduced .step { transition: none !important; }
+  .story--reduced .gather line { transition: none !important; stroke-dasharray: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .story .world { transform: none !important; transition: none !important; }
+    .story .body, .story .orbits ellipse,
+    .story .lbl-name, .story .lbl-role,
+    .story .step { transition: none !important; }
+    .story .gather line { transition: none !important; stroke-dasharray: none; }
+  }
+</style>
+
+<script>
+  const story = document.querySelector<HTMLElement>('.story');
+  if (story) {
+    story.classList.add('story--enhanced');
+    const steps = Array.from(story.querySelectorAll<HTMLElement>('.step'));
+    const setFocus = (id: string) => {
+      story.dataset.focus = id;
+      steps.forEach((s) => s.classList.toggle('is-active', s.dataset.step === id));
+    };
+
+    // arriving mid-page (reload, anchor): focus the step nearest center
+    const mid = window.innerHeight / 2;
+    let best = steps[0];
+    let bestD = Infinity;
+    for (const s of steps) {
+      const r = s.getBoundingClientRect();
+      const d = Math.abs((r.top + r.bottom) / 2 - mid);
+      if (d < bestD) { bestD = d; best = s; }
+    }
+    setFocus(best.dataset.step!);
+
+    // a step activates when it crosses the vertical center band; last-known
+    // focus persists between steps so the map never snaps to a null state
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setFocus((e.target as HTMLElement).dataset.step!);
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    );
+    steps.forEach((s) => io.observe(s));
+
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const applyMotion = () => story.classList.toggle('story--reduced', mq.matches);
+    applyMotion();
+    mq.addEventListener('change', applyMotion);
+
+    // one completion event, only where the counter exists (production)
+    const last = steps[steps.length - 1];
+    let completed = false;
+    const done = new IntersectionObserver((entries) => {
+      if (completed || !entries.some((e) => e.isIntersecting)) return;
+      completed = true;
+      done.disconnect();
+      (window as any).goatcounter?.count?.({
+        path: 'soulsystem-story-completed',
+        title: 'soulsystem story completed',
+        event: true,
+      });
+    });
+    done.observe(last);
+  }
+</script>

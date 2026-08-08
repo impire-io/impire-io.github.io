@@ -2,3 +2,6 @@
 __pycache__/
 .vercel
 .env*
+node_modules/
+dist/
+.astro/

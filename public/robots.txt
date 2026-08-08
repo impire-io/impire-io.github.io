@@ -1,0 +1,12 @@
+# impire.io — everything here is source-available and deliberately open to
+# crawlers, including AI crawlers and AI-training crawlers. Access is open;
+# the license (not robots.txt) governs commercial re-use of the software:
+# https://impire.io/license/
+#
+# Agents: start at https://impire.io/llms.txt — every page has a markdown
+# mirror, and /llms-full.txt is the whole site in one fetch.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://impire.io/sitemap.xml

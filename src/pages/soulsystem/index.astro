@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SoulMap from '../../components/soulsystem/SoulMap.astro';
+import { BODIES } from '../../data/soulsystem';
+import { software } from '../../lib/jsonld';
+
+const schema = BODIES.map((b) =>
+  software({ name: b.name, description: b.oneLiner, repo: b.repo, version: b.version }),
+);
+
+// page-voice descriptions for the key; substance stays in the data module
+const descs: Record<string, string> = {
+  soulstream:
+    'Everything that happens is written down — humans and AI applying the <b>same signed changes</b> to shared work, on one log everyone can read. No bot API, no human API. Every other body writes here.',
+  soulidentity:
+    "Who is who. A persona's keys live here — born on first touch, never leaving — and a stranger's credential becomes a scoped one at the door. <b>No passwords, no per-person database.</b>",
+  soulrealm:
+    'Where minds actually run. An agent or a tool is a declaration; soulrealm runs it — the <b>same declaration, unchanged</b> — natively, in a microVM, or as a Kubernetes pod.',
+  soulfold:
+    'The door a person walks through. A passkey-first OpenID provider that stands <b>exactly where Entra or Auth0 would</b>. No passwords, ever; enrol by single-use invitation, and an admin console to run it.',
+  soulnode:
+    'Where the whole system comes down to earth. One binary gathers the record, the name, the room, and the door. <b><code>soulnode init &amp;&amp; up</code></b>, and a person signs in with a passkey.',
+};
+---
+<BaseLayout
+  title="The soulsystem — five bodies, one record at the center"
+  description="The soulsystem: five open components with a signed record at the center — the record, the name, the room, the door, and the house that gathers them into one binary."
+  project="soulstream"
+  active="soulsystem"
+  ogImage="soulsystem.png"
+  schema={schema}
+>
+  <header class="hero hero--sub" id="top">
+    <div class="copy">
+      <p class="eyebrow">the soulsystem · five components</p>
+      <h1>A record at the center, and a system that grew around it.</h1>
+      <p class="sub">
+        It began as one protocol — a signed log that humans and AI change together. Then the
+        questions the record couldn't answer became their own projects: who are you, where
+        does a mind actually run, how does a stranger get in, and how does all of it fit on
+        one machine you own.
+      </p>
+      <p class="sub">
+        The answers are <b>four more open codebases in orbit around the record</b>, and a
+        fifth that gathers the whole thing into a single binary. A solar system, near enough:
+        one body at the center that everything writes to, and the rest circling it.
+      </p>
+    </div>
+    <p class="scrollhint">the map is below · click a body</p>
+  </header>
+
+  <main class="system" aria-label="the soulsystem">
+    <p class="lede">
+      Each body is a separate repository, shipped on its own, source-available, and honest
+      about what's proven and what isn't. <b>None of them needs a platform underneath.</b>
+      They meet on plain NATS connections and a record everyone can read.
+    </p>
+
+    <SoulMap mode="static" />
+
+    <ol class="legend">
+      {BODIES.map((b) => (
+        <li class="row" id={b.id} data-id={b.id} style={`--a: var(--${b.hue}); --a-bright: var(--${b.hue}-bright)`}>
+          <div class="key"><i class="dot"></i><b>{b.name}</b><span class="role">{b.role}</span></div>
+          <p class="desc" set:html={descs[b.id]} />
+          <div class="meta">
+            <span class="st"><i>{b.version}</i> · {b.status}</span>
+            <a class="src" href={b.repo}>code →</a>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="system-close">
+      <b>Four make the system; the fifth is where you live in it.</b> The record at the
+      center, the name, the room, and the door in orbit, and the house that carries them all.
+      Grown one honest question at a time, in the open — with the reasoning, the reversals,
+      and the measurements kept next to the code.
+    </p>
+  </main>
+
+  <div class="ctarow">
+    <a class="enter enter--solid" href="https://github.com/impire-io/soulnode">Get soulnode →</a>
+    <a class="enter" href="/soulstream/">Start with the record →</a>
+  </div>
+  <p class="micro">five open repositories · fair-code · humans and AI through the same door · no platform underneath</p>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  /** shown above the shared boilerplate, page-specific */
+  note?: string;
+}
+const { note } = Astro.props;
+---
+<footer>
+  <div class="cols">
+    <div>
+      {note && <p>{note}</p>}
+      <p>
+        Everything here is built in the open — the reasoning, the reversals, and
+        the measurements live next to the code, including what isn't proven yet.
+      </p>
+      <p>
+        <a href="https://github.com/impire-io">github.com/impire-io</a> ·
+        <a href="/license/">fair-code license</a>
+      </p>
+    </div>
+    <div class="meta">
+      <span>impire.io · no cookies · privacy-friendly stats by <a href="https://impire.goatcounter.com" rel="external">GoatCounter</a></span>
+      <span>source-available · <a href="/license/">Sustainable Use License</a></span>
+    </div>
+  </div>
+</footer>

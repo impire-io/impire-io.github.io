@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('book')).sort((a, b) => a.data.order - b.data.order);
+const chapters = entries.filter((e) => e.data.kind === 'chapter');
+const glossary = entries.find((e) => e.data.kind === 'glossary');
+
+const parts: { title: string; items: typeof chapters }[] = [];
+for (const ch of chapters) {
+  const last = parts[parts.length - 1];
+  if (!last || last.title !== ch.data.part) parts.push({ title: ch.data.part, items: [ch] });
+  else last.items.push(ch);
+}
+---
+<BaseLayout
+  title="The PRA book — a draft about an intelligence with no task"
+  description="A book about the Pose Resolution Architecture: why frozen models fail, what a sensorimotor triplet is, and how a population of competing frames learns structure nobody specified. Published as a draft."
+  project="pra"
+  active="research"
+  ogImage="book.png"
+  footerNote="The PRA book is written in the open like everything else here; its source lives in the PRA repository, and this site renders it verbatim."
+>
+  <main class="book">
+    <header class="book-head">
+      <p class="eyebrow"><a href="/pra/">pra</a> · the book · draft</p>
+      <h1>The PRA book</h1>
+      <p class="book-lede">
+        A book about the Pose Resolution Architecture: why frozen models fail, what a
+        sensorimotor triplet is, and how a population of competing frames learns
+        structure nobody specified.
+      </p>
+      <p class="book-lede">
+        It's written in first person by one builder, and the reversals are the plot:
+        nearly every chapter holds a belief that a measurement later refuted. Each
+        chapter also carries fenced <em>Under the hood</em> boxes for engineers;
+        skipping every box loses precision, never the story.
+      </p>
+    </header>
+
+    <section class="book-draft" id="draft">
+      <h2>Published as a draft</h2>
+      <p>
+        These chapters are written, but the book's own rule is that no empirical claim
+        ships as final before a numbers audit re-verifies it against the repository,
+        and that audit hasn't run yet. Read the story now; read the measured numbers
+        as provisional until the pages say otherwise.
+      </p>
+    </section>
+
+    <nav class="book-toc" aria-label="contents">
+      {parts.map((part) => (
+        <section>
+          <h2>{part.title}</h2>
+          <ol>
+            {part.items.map((ch) => (
+              <li><a href={`/pra/book/${ch.id}.html`}><span class="n">{ch.data.num}</span>{ch.data.title}</a></li>
+            ))}
+          </ol>
+        </section>
+      ))}
+      <section>
+        <h2>Part 5 — Teachers</h2>
+        <p class="note">Not written yet, on purpose. Its one measured foundation is that
+        several worlds can already feed one brain safely; the rest waits on results
+        the project doesn't have.</p>
+      </section>
+      <section>
+        <h2>Reference</h2>
+        <ol>
+          {glossary && <li><a href={`/pra/book/${glossary.id}.html`}><span class="n">·</span>Glossary — every plain-words definition, in order of appearance</a></li>}
+        </ol>
+      </section>
+    </nav>
+  </main>
+</BaseLayout>
