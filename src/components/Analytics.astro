@@ -14,5 +14,17 @@
     s.src = '/js/count.js';
     s.setAttribute('data-goatcounter', 'https://impire.goatcounter.com/count');
     document.head.appendChild(s);
+
+    /* which component pulls interest: one event per impire-io repo click */
+    document.addEventListener('click', function (ev) {
+      var a = ev.target && ev.target.closest && ev.target.closest('a[href^="https://github.com/impire-io"]');
+      if (!a || !window.goatcounter || !window.goatcounter.count) return;
+      var repo = a.href.split('github.com/impire-io/')[1];
+      window.goatcounter.count({
+        path: 'ext-github-' + ((repo || 'org').split(/[/#?]/)[0] || 'org'),
+        title: 'outbound: ' + a.href,
+        event: true,
+      });
+    });
   })();
 </script>
