@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Research — the questions behind the soulsystem"
+  description="The research wing of impire.io: PRA, a machine that learns a world by living in it, and imps, agents that are aware cheaply and think rarely. Pre-registered gates, honest measurement, failures in the open."
+  project="pra"
+  active="research"
+>
+  <header class="hero hero--sub">
+    <div class="copy">
+      <p class="eyebrow">research · two open questions</p>
+      <h1>The questions we haven't earned answers to yet.</h1>
+      <p class="sub">
+        The soulsystem is infrastructure you can run today. The research wing is the other
+        half of the work: questions too big to promise, pursued in the open. Every ambition
+        sits behind a named, pre-registered gate; claims carry evidence, and
+        <b>only a measurement closes a debate</b>.
+      </p>
+      <p class="sub">
+        Failures are published next to the wins — a result that only <em>looks</em> smart
+        is treated as a bug in the test rig, not a success.
+      </p>
+    </div>
+  </header>
+
+  <main class="prose" style="padding-bottom: 46px">
+    <div class="wing">
+      <article class="card" style="--a: var(--pra); --a-bright: var(--pra-bright)">
+        <p class="eyebrow">pra · pose resolution architecture</p>
+        <h3>An intelligence with no task.</h3>
+        <p>
+          An AI that learns a world by <b>doing</b>, not by being told — no labels, no
+          dataset, no task you hand it. On simple worlds it provably works; on complex
+          worlds it grabs the simplest explanation instead of the true one. That gap is the
+          headline question the whole project exists to answer.
+        </p>
+        <p class="links-row">
+          <a class="enter enter--solid" href="/pra/">Meet PRA →</a>
+          <a class="enter" href="/pra/book/">The book (draft)</a>
+          <a class="enter" href="/pra/how-it-works.html">See it live</a>
+        </p>
+      </article>
+
+      <article class="card" style="--a: var(--imps); --a-bright: var(--imps-bright)">
+        <p class="eyebrow">imps · autonomous agents</p>
+        <h3>An agent you don't drive.</h3>
+        <p>
+          Small agents that are <b>aware of everything cheaply and think rarely</b> — the
+          awareness/thinking boundary enforced by the compiler, not by discipline. Early:
+          two features shipped, the always-on cooperating colony is the direction, not the
+          current state.
+        </p>
+        <p class="links-row">
+          <a class="enter enter--solid" href="/imps/">Meet imps →</a>
+          <a class="enter" href="https://github.com/impire-io/imps">The code</a>
+        </p>
+      </article>
+    </div>
+
+    <h3>How research is run here</h3>
+    <p>
+      The same discipline binds both projects. Research topics open with a pre-registration
+      — what question, what would count as an answer, what would change our minds — and
+      close by graduating to a design, an artifact, or an honest abandonment. Direction
+      decisions record their reversal conditions when they are made, so a future turn is a
+      clean, anticipated move instead of drift.
+    </p>
+    <p>
+      The full logs are public: every episode, reversal, and measurement, numbered and kept
+      next to the code at <a href="https://github.com/impire-io">github.com/impire-io</a>.
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .wing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: none;
+    margin: 34px 0 14px;
+  }
+  .links-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  @media (max-width: 860px) {
+    .wing { grid-template-columns: 1fr; }
+  }
+</style>

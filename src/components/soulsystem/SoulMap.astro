@@ -1,0 +1,115 @@
+---
+// The soulsystem map. One SVG, two modes:
+//  - 'static'  — the reference page: hover cross-highlights map <-> legend
+//  - 'story'   — the homepage scroll story: an inner .world group receives
+//                per-step focus transforms; gather lines draw in for the house
+// All geometry comes from src/data/soulsystem.ts; all color from tokens.
+import { BODIES, ORBITS, VIEW } from '../../data/soulsystem';
+
+interface Props {
+  mode: 'story' | 'static';
+}
+const { mode } = Astro.props;
+const hrefFor = (id: string) => (mode === 'story' ? `#step-${id}` : `#${id}`);
+const soulnode = BODIES.find((b) => b.id === 'soulnode')!;
+const others = BODIES.filter((b) => b.id !== 'soulnode');
+// orbits circle the record, not the viewBox center
+const center = BODIES.find((b) => b.id === 'soulstream')!;
+---
+<figure class="map" data-mode={mode}>
+  <svg
+    viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
+    role="img"
+    aria-label="A map of the soulsystem: soulstream at the centre with soulidentity, soulrealm, soulfold, and soulnode in orbit."
+  >
+    <defs>
+      {BODIES.map((b) => (
+        <radialGradient id={`g-${b.id}`} class={`grad grad--${b.id}`}>
+          <stop offset="0" stop-opacity="0.85" />
+          <stop offset="1" stop-opacity="0" />
+        </radialGradient>
+      ))}
+    </defs>
+
+    <g class="world">
+      <g class="orbits" fill="none">
+        {ORBITS.map((o) => (
+          <ellipse cx={center.cx} cy={center.cy} rx={o.rx} ry={o.ry} vector-effect="non-scaling-stroke" />
+        ))}
+      </g>
+
+      {mode === 'story' && (
+        <g class="gather" aria-hidden="true">
+          {others.map((b) => (
+            <line
+              x1={soulnode.cx} y1={soulnode.cy} x2={b.cx} y2={b.cy}
+              pathLength="1" vector-effect="non-scaling-stroke"
+            />
+          ))}
+        </g>
+      )}
+
+      {BODIES.map((b) => (
+        <a class={`body body--${b.id}`} href={hrefFor(b.id)} data-id={b.id}>
+          <circle class="halo" cx={b.cx} cy={b.cy} r={b.haloR} fill={`url(#g-${b.id})`} />
+          <circle class="core" cx={b.cx} cy={b.cy} r={b.coreR} />
+          <text class="lbl-name" x={b.label.x} y={b.label.y} text-anchor={b.label.anchor}>{b.name}</text>
+          <text class="lbl-role" x={b.label.x} y={b.label.y + (b.label.anchor === 'middle' ? 17 : 15)} text-anchor={b.label.anchor}>
+            {b.role}{b.id === 'soulstream' && ' · the centre'}
+          </text>
+        </a>
+      ))}
+    </g>
+  </svg>
+  {mode === 'static' && (
+    <figcaption>
+      A record at the centre; the name, the room, and the door in orbit; the
+      house gathering all four. Hover a body — or read the key below.
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  /* fills live in CSS, not presentation attributes, so the light tokens (and
+     any future retune) land without touching the SVG */
+  .grad--soulstream stop   { stop-color: var(--soulstream-bright); }
+  .grad--soulidentity stop { stop-color: var(--soulidentity-bright); }
+  .grad--soulrealm stop    { stop-color: var(--soulrealm-bright); }
+  .grad--soulfold stop     { stop-color: var(--soulfold-bright); }
+  .grad--soulnode stop     { stop-color: var(--soulnode-bright); }
+
+  .body--soulstream   { --b: var(--soulstream);   }
+  .body--soulidentity { --b: var(--soulidentity); }
+  .body--soulrealm    { --b: var(--soulrealm);    }
+  .body--soulfold     { --b: var(--soulfold);     }
+  .body--soulnode     { --b: var(--soulnode);     }
+  .body .core { fill: var(--b); }
+  .body .lbl-role { fill: var(--b); }
+
+  .gather line {
+    stroke: var(--soulnode);
+    stroke-width: 1.2;
+    opacity: 0;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+</style>
+
+<script>
+  /* static mode only: link the map's bodies to the key — hovering or
+     focusing one lights both. (Astro doesn't process scripts inside JSX
+     conditionals, so the guard lives at runtime.) */
+  if (document.querySelector('.map[data-mode="static"]')) {
+    const byId = (id: string) => document.querySelectorAll(`[data-id="${id}"]`);
+    document.querySelectorAll('.map .body, .legend .row').forEach((el) => {
+      const id = el.getAttribute('data-id');
+      if (!id) return;
+      const on = () => byId(id).forEach((n) => n.classList.add('hot'));
+      const off = () => byId(id).forEach((n) => n.classList.remove('hot'));
+      el.addEventListener('pointerenter', on);
+      el.addEventListener('pointerleave', off);
+      el.addEventListener('focusin', on);
+      el.addEventListener('focusout', off);
+    });
+  }
+</script>

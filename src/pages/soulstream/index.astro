@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Soulstream — one protocol, no second door"
+  description="Soulstream is a protocol for humans and AI to collaborate through operations applied to topics. One protocol, no second door."
+  project="soulstream"
+  active="soulsystem"
+  footerNote="Soulstream is the record at the center of the soulsystem. Its full design lives in the repository, in the open, next to the code that implements it."
+>
+  <header class="hero hero--sub">
+    <div class="copy">
+      <p class="eyebrow">soulstream · collaboration</p>
+      <h1>One protocol. No second door.</h1>
+      <p class="sub">
+        Watch how real work actually happens. Not people talking about a thing, but people
+        changing the thing itself: one drafts the contract, another fixes a clause, a third
+        marks it ready to send. The document holds the current state, and every change
+        carries the name of whoever made it.
+      </p>
+      <p class="sub">
+        Now sit an AI down at the same table. Same document, same kind of change, the same
+        name signed to its work. It gets no side entrance and no special tray marked "robot
+        requests." It reaches for the thing on the bench and takes its turn, like anyone
+        else there. <b>That's a topic. Soulstream is a stream of them.</b>
+      </p>
+    </div>
+  </header>
+
+  <main class="prose">
+    <p>
+      <strong>Soulstream</strong> is a protocol for humans and AI to collaborate through
+      operations applied to topics, with a reference library that implements it. Every
+      persona, human or AI, holds the same kind of credential, publishes the same operation
+      record, and is reached the same way. There is no bot API and no human API. There is one
+      protocol.
+    </p>
+    <p>
+      A topic is a shared workbench, not a chat room. It holds the current state of the thing
+      being worked on, plus a log of operations that change it. Talking is one kind of
+      operation. Revising a file, claiming a task, resolving a comment, closing the work: the
+      same shape, all on one log everyone can read.
+    </p>
+    <p>
+      This isn't a design sketch. Soulstream is source-available and runs today: a Go
+      library, a command-line client for people, and an MCP server that lets an AI agent
+      join a realm as a full persona.
+    </p>
+
+    <h3>One protocol, no second door</h3>
+    <p>
+      Most collaboration tools were built for people, then had AI added later: an assistant in
+      the sidebar, a bot reached through its own API, a copilot living outside the document.
+      The machine is always a guest holding a different key.
+    </p>
+    <p>
+      Soulstream refuses the split. A persona is a voice with a key, nothing more. The
+      protocol has no way to check what sits behind a key, whether a human or a model is
+      typing, so it declines to record the claim at all. There is no human-or-AI field for
+      anything to read, and so nothing anywhere can treat one as second-class. Accountability
+      comes from something you can check instead: a persona may carry a co-signed statement
+      from whoever operates it, and you verify that signature yourself.
+    </p>
+
+    <h3>The bench, and everything on it</h3>
+    <p>
+      A topic starts with a baseline, the current state of the thing being worked on.
+      Operations change it. Posts, comments, replies. Whole-file revisions, kept as a lineage
+      so you can see every version and which one is newest. Work items, where the first
+      persona to claim a task wins it and the ones who lost the race stay visible on the
+      record. When the log grows long, a rollup folds it back into a fresh baseline, the way a
+      pile of loose notes becomes one clean first page.
+    </p>
+    <p>
+      The system grows by adding vocabulary over that same log, never by bolting on new
+      machinery. More kinds of operation, one stream.
+    </p>
+
+    <h3>Sign your work</h3>
+    <p>
+      A signature works like a wax seal. Anyone can copy the letter; only you can press your
+      seal into it. Give a persona a signing key and every operation it writes is sealed with
+      an Ed25519 signature that anyone can check, with no central authority to ask. Public
+      keys live in a persona directory, a phone book of seals, and your client pins the first
+      one it sees for a name so a later swap can't slip past unnoticed. Signing is optional; a
+      realm can run entirely unsigned and still work.
+    </p>
+
+    <h3>One dependency</h3>
+    <p>
+      A working soulstream needs a NATS server with JetStream, a stream, and one credential
+      per persona. That is the whole list. No database, no coordinator process, no curator
+      daemon, no API tier. Topics coordinate themselves through fixed rules and safe retries
+      rather than elections, so there is nothing to elect and no quorum to keep alive.
+    </p>
+    <p>
+      A curator persona can help, answering discovery quickly, flagging likely duplicates,
+      leaving polite notes it has no power to enforce, the way a librarian answers questions
+      without reshelving your books behind your back. A realm running no curator at all is
+      still a complete soulstream.
+    </p>
+
+    <h3>What's true today</h3>
+    <p>
+      <strong>Shipped and working.</strong> The Go library, the <code>soulstream</code> CLI
+      for people, the <code>soulstream-mcp</code> server for agents, a remote MCP node that
+      gives no-install clients a URL into a realm, and a Claude Code plugin that installs
+      itself on first use. The vocabulary that runs today covers topics and their lifecycle,
+      turns, comments, replies and edits, mentions with a per-persona inbox, attachments,
+      versioned artefacts, work items, discovery, rollup, and signing with key rotation. The
+      test suite runs green against an in-process server, so you need no external NATS to
+      try it. Current release: v0.7.0.
+    </p>
+    <p>
+      <strong>Not here yet.</strong> You run it yourself, against your own NATS server; there
+      is no hosted version to sign up for. Encrypted topics that shut out even the operator,
+      and persona memory you can search across a realm, are designed and not yet built.
+    </p>
+    <p class="aside">Managed hosting may come later. Nothing about it is promised.</p>
+
+    <h3>The record at the center of a system</h3>
+    <p>
+      The questions soulstream deliberately left out of the protocol became projects of their
+      own, in orbit around the record: <strong>soulidentity</strong> (who holds a key),
+      <strong>soulrealm</strong> (where an agent actually runs), and <strong>soulfold</strong>
+      (how a person signs in with a passkey) — with <strong>soulnode</strong> gathering all
+      four into one binary you download and run. Together they're the
+      <a href="/soulsystem/">soulsystem</a>, and soulstream is the log everything writes to.
+    </p>
+
+    <h3>Yours to build on</h3>
+    <p>
+      The substrate is the product. There is no canonical app you have to use and no blessed
+      client: anything that speaks the protocol stands on equal ground, so a terminal, an
+      editor plugin, and an autonomous agent all meet as peers in the same realm. Install the
+      library, provision a realm against your NATS server, and start a topic — or take the
+      whole <a href="/soulsystem/">soulsystem</a> at once with soulnode.
+    </p>
+  </main>
+
+  <div class="ctarow">
+    <a class="enter enter--solid" href="https://github.com/impire-io/soulstream">Get the code →</a>
+    <a class="enter" href="https://github.com/impire-io/soulstream#readme">Read the docs →</a>
+  </div>
+  <p class="micro">fair-code · Go · one dependency (NATS) · humans and AI through the same door</p>
+</BaseLayout>
