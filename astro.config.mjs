@@ -8,4 +8,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://impire.io',
   build: { format: 'preserve' },
+  // the book is vendored verbatim and checked for text fidelity against its
+  // source — no typographic rewriting
+  markdown: { smartypants: false },
 });

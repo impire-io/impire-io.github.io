@@ -16,4 +16,18 @@ const story = defineCollection({
   }),
 });
 
-export const collections = { story };
+// The PRA book, vendored verbatim from ../pra/book by tools/sync-book.py.
+// Bodies are the upstream markdown untouched; frontmatter carries the chrome.
+const book = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/book' }),
+  schema: z.object({
+    order: z.number(),
+    num: z.string(),
+    title: z.string(),
+    part: z.string(),
+    src: z.string(),
+    kind: z.enum(['chapter', 'glossary']),
+  }),
+});
+
+export const collections = { story, book };

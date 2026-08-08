@@ -325,7 +325,30 @@ h1, h2, .wordmark {
   background: none; border: none; padding: 0;
 }
 
-/* the technical asides — fenced boxes the story never depends on */
+/* the technical asides — fenced boxes the story never depends on.
+   Astro renders the book's `> **Under the hood: …**` markdown as plain
+   blockquotes; every book blockquote IS such an aside (sync-book.py vendors
+   from a source whose build enforced it), so the blockquote selector is safe. */
+.book-prose blockquote {
+  margin: 6px 0 24px; padding: 16px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 2px solid color-mix(in srgb, var(--a) 55%, var(--line));
+  border-radius: 8px;
+}
+.book-prose blockquote p {
+  font-family: var(--sans); font-size: 0.9rem; line-height: 1.65;
+  color: var(--ink-dim); margin: 0 0 10px;
+}
+.book-prose blockquote p:last-child { margin-bottom: 0; }
+.book-prose blockquote > p:first-of-type > strong:first-child {
+  display: block;
+  font: 600 0.76rem/1.6 var(--mono);
+  letter-spacing: 0.05em;
+  color: var(--a);
+  margin-bottom: 4px;
+}
+
 .book-prose .uth {
   margin: 6px 0 24px; padding: 16px 20px;
   background: var(--panel);
