@@ -25,7 +25,9 @@ grep -o '<loc>[^<]*</loc>' dist/sitemap.xml | sed 's/<[^>]*>//g' | while read -r
 done
 
 # every built page carries canonical, the mirror advert, og:image, and JSON-LD
-find dist -name '*.html' ! -path 'dist/pra/how-it-works.html' | while read -r f; do
+# (exempt: the explainer and the retired book's redirect stubs — hand-written
+# flat files served from public/)
+find dist -name '*.html' ! -path 'dist/pra/how-it-works.html' ! -path 'dist/pra/book/*' | while read -r f; do
   grep -q 'rel="canonical"' "$f" || fail "no canonical in $f"
   grep -q 'rel="alternate" type="text/markdown"' "$f" || fail "no md alternate in $f"
   grep -q 'property="og:image"' "$f" || fail "no og:image in $f"
@@ -36,7 +38,7 @@ done
 node -e '
   const { readFileSync } = require("fs");
   const { execSync } = require("child_process");
-  const files = execSync("find dist -name \"*.html\" ! -path \"dist/pra/how-it-works.html\"").toString().trim().split("\n");
+  const files = execSync("find dist -name \"*.html\" ! -path \"dist/pra/how-it-works.html\" ! -path \"dist/pra/book/*\"").toString().trim().split("\n");
   for (const f of files) {
     const html = readFileSync(f, "utf8");
     const m = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);

@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 // Postbuild agent-accessibility pass. Runs after `astro build` and derives,
 // from the built HTML itself (so nothing can drift):
-//   - a markdown mirror per page   (/<page>/index.md, /pra/book/<slug>.md)
+//   - a markdown mirror per page   (/<page>/index.md)
 //   - /llms.txt                    (curated index, links point at mirrors)
 //   - /llms-full.txt               (the whole site's text in one fetch)
 //   - /sitemap.xml                 (no lastmod — omitted rather than faked)
 // The HTML→markdown converter understands exactly the tags this site emits;
 // anything unexpected passes through as text, never breaking the build.
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = new URL('../dist/', import.meta.url).pathname;
 const SITE = 'https://impire.io';
 
-// section pages in reading order; book chapters are discovered from dist
+// section pages in reading order
 const SECTIONS = [
   { path: '/', section: 'soulsystem' },
   { path: '/soulsystem/', section: 'soulsystem', repo: null },
@@ -112,16 +112,6 @@ function contentOf(html) {
 // ---------------------------------------------------------------- build
 
 const pages = [...SECTIONS];
-for (const f of readdirSync(join(DIST, 'pra', 'book')).sort()) {
-  if (f.endsWith('.html') && f !== 'index.html') {
-    pages.push({ path: `/pra/book/${f}`, section: 'book' });
-  }
-}
-pages.splice(
-  pages.findIndex((p) => p.section === 'book'),
-  0,
-  { path: '/pra/book/', section: 'book' },
-);
 
 const built = [];
 for (const page of pages) {
@@ -149,8 +139,8 @@ const llms = `# impire.io
 > License: free to use and self-host; commercial offering requires an
 > agreement (${SITE}/license/).
 
-Every page has a markdown mirror at <page-url>index.md (flat .html pages: same
-name with .md). The whole site in one fetch: ${SITE}/llms-full.txt
+Every page has a markdown mirror at <page-url>index.md. The whole site in one
+fetch: ${SITE}/llms-full.txt
 
 ## Soulsystem
 
@@ -160,12 +150,7 @@ ${ORBIT_REPOS.map(([n, d]) => `- [${n} (code)](https://github.com/impire-io/${n}
 ## Research
 
 ${by('research').map(line).join('\n')}
-
-## The PRA book (draft)
-
-${by('book')
-  .map((p) => (p.path === '/pra/book/' ? line(p) : `- [${p.title.replace(' — the PRA book', '')}](${p.mirror})`))
-  .join('\n')}
+- [The PRA book (draft)](https://impire.io/poseres-book/): the long-form narrative — why frozen brains fail and how a population of competing frames learns structure nobody specified (code: https://github.com/impire-io/poseres-book)
 
 ## Optional
 

@@ -1,31 +1,23 @@
 ---
 // All head meta lives here so pages never hand-roll it: canonical, the
 // markdown mirror advertisement, OG/Twitter cards, favicons, and one JSON-LD
-// @graph per page. Mirror URLs follow the build convention: directory pages
-// get <path>index.md, flat .html pages get <slug>.md (see
-// scripts/build-mirrors.mjs, which generates them from the built HTML).
+// @graph per page. Mirror URLs follow the build convention: every page gets
+// <path>index.md (see scripts/build-mirrors.mjs, which generates them from
+// the built HTML).
 import { graph } from '../lib/jsonld';
 
 interface Props {
   title: string;
   description: string;
-  /** og:type; articles are book chapters */
-  type?: 'website' | 'article';
   /** path under /og/, e.g. 'soulsystem.png' */
   ogImage?: string;
   /** page-specific JSON-LD nodes appended to the Organization+WebSite graph */
   schema?: object[];
-  /** served path override for flat .html pages — Astro.url reports the book
-      chapters with a trailing slash, but format 'preserve' serves them as
-      /pra/book/<slug>.html, so those pages must state their real path */
-  path?: string;
 }
-const { title, description, type = 'website', ogImage = 'default.png', schema = [], path } = Astro.props;
-const served = path ?? Astro.url.pathname;
+const { title, description, ogImage = 'default.png', schema = [] } = Astro.props;
+const served = Astro.url.pathname;
 const canonical = new URL(served, Astro.site);
-const mirror = served.endsWith('.html')
-  ? served.replace(/\.html$/, '.md')
-  : `${served.replace(/\/$/, '')}/index.md`;
+const mirror = `${served.replace(/\/$/, '')}/index.md`;
 const og = new URL(`/og/${ogImage}`, Astro.site);
 const jsonLd = JSON.stringify(graph(...schema));
 ---
@@ -37,7 +29,7 @@ const jsonLd = JSON.stringify(graph(...schema));
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:type" content={type} />
+<meta property="og:type" content="website" />
 <meta property="og:image" content={og} />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
