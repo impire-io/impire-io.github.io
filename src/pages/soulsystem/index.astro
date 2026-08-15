@@ -26,7 +26,7 @@ const descs: Record<string, string> = {
   title="The soulsystem — five bodies, one record at the center"
   description="The soulsystem: five open components with a signed record at the center — the record, the name, the room, the sign-in, and the house that gathers them into one binary."
   project="soulstream"
-  active="soulsystem"
+  active="soulstream"
   ogImage="soulsystem.png"
   schema={schema}
 >
@@ -52,8 +52,8 @@ const descs: Record<string, string> = {
   <main class="system" aria-label="the soulsystem">
     <p class="lede">
       Each body is a separate repository, shipped on its own, source-available, and honest
-      about what's proven and what isn't. <b>None of them needs a platform underneath.</b>
-      They meet on plain NATS connections and a record everyone can read.
+      about what's proven and what isn't. <b>Nothing sits underneath them but a NATS
+      server</b> — they meet on plain connections and a record everyone can read.
     </p>
 
     <SoulMap mode="static" />
@@ -80,8 +80,9 @@ const descs: Record<string, string> = {
   </main>
 
   <div class="ctarow">
-    <a class="enter enter--solid" href="https://github.com/impire-io/soulstream">Get soulstream →</a>
+    <a class="enter enter--solid" href="/soulstream/get-started/">Get started →</a>
     <a class="enter" href="/soulstream/">Start with the record →</a>
+    <a class="enter" href="https://github.com/impire-io/soulstream">The code →</a>
   </div>
-  <p class="micro">five open repositories · fair-code · humans and AI as peers · no platform underneath</p>
+  <p class="micro">five open repositories · fair-code · humans and AI as peers · nothing underneath but NATS</p>
 </BaseLayout>

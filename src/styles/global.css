@@ -45,7 +45,8 @@ h1, h2, .wordmark {
 .nav .links a { text-decoration: none; color: var(--ink-dim); transition: color .15s; }
 .nav .links a:hover, .nav .links a[aria-current] { color: var(--a); }
 .nav .links a[data-p="soulstream"]:hover,   .nav .links a[aria-current][data-p="soulstream"]   { color: var(--soulstream); }
-.nav .links a[data-p="research"]:hover,     .nav .links a[aria-current][data-p="research"]     { color: var(--pra); }
+.nav .links a[data-p="pra"]:hover,          .nav .links a[aria-current][data-p="pra"]          { color: var(--pra); }
+.nav .links a[data-p="imps"]:hover,         .nav .links a[aria-current][data-p="imps"]         { color: var(--imps); }
 .nav .links a[data-p="about"]:hover,        .nav .links a[aria-current][data-p="about"]        { color: var(--ink); }
 
 /* ---------- hero ---------- */
@@ -308,6 +309,13 @@ footer .meta span { display: block; margin-bottom: 6px; }
 footer .meta a { color: var(--ink-faint); }
 
 /* ---------- responsive ---------- */
+@media (max-width: 620px) {
+  /* four sections don't fit beside the wordmark — give them their own line
+     instead of letting one link wrap off on its own */
+  .nav { flex-wrap: wrap; row-gap: 10px; padding-top: 20px; }
+  .nav .links { margin-left: 0; width: 100%; gap: 16px; }
+}
+
 @media (max-width: 860px) {
   .principles .grid { grid-template-columns: 1fr; gap: 26px; }
   .band .inner { grid-template-columns: 1fr; gap: 36px; padding: 64px 28px; }

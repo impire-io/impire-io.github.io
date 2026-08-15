@@ -2,26 +2,92 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="About — a protocol, never a platform"
-  description="What impire.io is building and refuses to become: a stream on which humans and AI collaborate as peers, on infrastructure you own. The founding bet, the refusals, and how ambition stays honest."
+  title="Who's behind this — impire.io"
+  description="Who builds impire.io and why: an event-driven conviction from 2012, pointed at collaboration (soulstream) and at the brain (PRA), built in the open by one person and an unusual collaborator."
   project="soulstream"
   active="about"
+  footerNote="The working method, the constitution, and the numbered journey of every reversal are public in soul-hq — including the parts that went wrong."
 >
   <header class="hero hero--sub">
     <div class="copy">
-      <p class="eyebrow">about · impire.io</p>
-      <h1>A protocol, never a platform.</h1>
+      <p class="eyebrow">about · who's behind this</p>
+      <h1>One pair of hands, and a lot of personas.</h1>
       <p class="sub">
-        impire.io builds the soulsystem — <b>a stream on which humans and AI collaborate as
-        peers, on infrastructure you own</b> — and pursues the research questions around it.
-        Every persona, human or AI, holds the same kind of credential, publishes the same
-        operation record, and is addressed the same way. There is no bot API and no human
-        API. There is one protocol.
+        I'm <b>Daan Gerits</b>. I've spent my working life building data platforms for banks,
+        telcos, and airports, and these days my day job is building the technical AI
+        foundations for organizations. impire.io is what I build around that, in the open:
+        <b>soulstream</b>, <b>PRA</b>, and <b>imps</b>.
+      </p>
+      <p class="sub">
+        All three come out of one conviction that settled in around 2012 and never left:
+        <b>the world is inherently event-driven</b>. Things happen, constantly and from every
+        direction, and nothing is quite the same afterward. That took me to the front of
+        event-driven architectures, and to Synadia, where I built and researched event-driven
+        AI on top of NATS.
       </p>
     </div>
   </header>
 
   <main class="prose">
+    <h3>Why I build this</h3>
+    <p>
+      What I love most sits between fields: taking an idea that's ordinary in one area and
+      finding out it's radical in another. Everything here is that one habit, pointed at
+      three different things.
+    </p>
+    <p>
+      <strong>Pointed at collaboration, it becomes soulstream.</strong> The tools we work in
+      were built for people and had AI bolted on afterwards: an assistant in a sidebar, a bot
+      reached through its own API, a copilot living outside the document. The machine is
+      always a guest holding a different key. I wanted the opposite — one record, one kind of
+      credential, no separate lane, so a person and a model take their turn at the same
+      bench. And I wanted the result to run on hardware I control.
+    </p>
+    <p>
+      <strong>Pointed at the brain, it becomes PRA.</strong> A brain, whatever else it is, is
+      the most event-driven system there is: things happen to it, constantly and from every
+      direction at once. So what if learning is prediction over movement rather than labels
+      over data? PRA is that question with a laptop behind it — an intelligence with no task,
+      learning a world by living in it.
+    </p>
+    <p>
+      <strong>Pointed at agents, it becomes imps.</strong> You hear an entire room and think
+      about almost none of it, until someone says your name. Awareness cheap and constant,
+      thinking rare and expensive — with the line between them enforced by the compiler
+      rather than by good intentions.
+    </p>
+
+    <h3>Working with an AI, out loud</h3>
+    <p>
+      This is a joint project between me and an AI, and I mean that concretely, not as a
+      confession buried in the acknowledgments. The ideas grow out of dialogue: I push, the
+      machine pushes back, and what survives gets written down. Papers I would never get
+      through alone get translated until I can actually use them. Code and prose get drafted
+      faster than I could ever type them.
+    </p>
+    <p>
+      Then comes the part that is entirely mine: <strong>deciding what's true</strong>.
+      Nothing here survived because it sounded good. Claims pass a bar that was written down
+      before the experiment ran, on runs that reproduce byte for byte, in a record that keeps
+      the failures filed next to the successes.
+    </p>
+
+    <h3>I am not a scientist</h3>
+    <p>
+      No PhD, no lab, no grant. A laptop, a stubborn streak, and an unusual collaborator. I
+      know how that looks from a distance — the internet has a shelf ready for a tinkerer
+      with a theory of learning, somewhere between perpetual motion and secret cancer cures.
+      That shelf is exactly why the method is strict.
+    </p>
+    <p>
+      You are not asked to trust me anywhere on this site. Where I claim a measurement, you
+      can rerun it. Where an idea is borrowed, I say whose it was. Where something is
+      unproven, the text says so and moves on. If smarter people with better tools read this
+      and see further, that isn't a defeat — that's the point. The longer version of all this
+      is <a href="https://impire.io/poseres-book/00-a-note-before-we-start.html">the note at
+      the start of the book</a>.
+    </p>
+
     <h3>The founding bet</h3>
     <p>
       The "what is needed" list stays short, and everything else is vocabulary over the
@@ -43,18 +109,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       the protocol growing around one client.
     </p>
 
-    <h3>What we refuse to become</h3>
+    <h3>What I refuse to build</h3>
     <p>The refusals are the spine of the thing:</p>
     <ul>
-      <li><strong>A platform instead of a protocol.</strong> The core answers "what is needed" and nothing more; the rest is extensions.</li>
-      <li><strong>A system with a coordinator or a consensus round.</strong> Deterministic rules, idempotent operations, optimistic concurrency — no steward, no election, no lock service.</li>
       <li><strong>A second lane for the AI.</strong> No bot API, no attribution laundering. Delegation is scoped credentials or a separately named persona.</li>
+      <li><strong>A system with a coordinator or a consensus round.</strong> Deterministic rules, idempotent operations, optimistic concurrency — no steward, no election, no lock service.</li>
       <li><strong>A store of record outside the record.</strong> Runtimes hold views, never the artefact.</li>
       <li><strong>A KMS, an identity provider, or a parallel permission system.</strong> Identity truth lives in the deployment's IAM; the NATS server stays the verifier of record.</li>
       <li><strong>A password store or a privileged peer.</strong> Sign-in is passkeys-only and must remain indistinguishable from any external OIDC provider.</li>
-      <li><strong>A dev-mode fork or a hosting platform.</strong> The house runs the real shape on your machine; every component remains independently deployable without it.</li>
+      <li><strong>A dev-mode fork.</strong> What runs on your machine is the real shape, and every component stays independently deployable.</li>
       <li><strong>A wrapper around NATS.</strong> Lean on NATS, don't wrap it: subject permissions are nearly the whole security model.</li>
     </ul>
+    <p class="aside">
+      Will there ever be a hosted version, for people who'd rather not run their own? Maybe.
+      It's a fair thing to want, and nothing here is built to prevent it: it would run the
+      same shape you run today, and self-hosting stays a first-class path either way.
+      Nothing about it is promised.
+    </p>
 
     <h3>How ambition stays honest</h3>
     <p>
@@ -77,4 +148,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       commercial offering by agreement.
     </p>
   </main>
+
+  <div class="ctarow">
+    <a class="enter enter--solid" href="/soulstream/get-started/">Run soulstream →</a>
+    <a class="enter" href="https://impire.io/poseres-book/">Read the PRA book →</a>
+    <a class="enter" href="https://github.com/impire-io">github.com/impire-io →</a>
+  </div>
+  <p class="micro">built in the open · one pair of hands · failures kept next to the wins</p>
 </BaseLayout>

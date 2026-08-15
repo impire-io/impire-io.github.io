@@ -97,7 +97,7 @@ export const BODIES: Body[] = [
     label: { x: 742, y: 442, anchor: 'start' },
     zoom: 1.35,
     // frame the house, its gather lines, and the one-binary detail below them
-    focus: { x: 600, y: 430 },
+    focus: { x: 540, y: 430 },
     hue: 'soulnode',
     status: 'pre-release binaries',
     version: 'v0.11.0-rc.2',

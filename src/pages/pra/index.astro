@@ -8,7 +8,7 @@ import { software } from '../../lib/jsonld';
   schema={[software({ name: 'PRA — Pose Resolution Architecture', description: 'An AI that learns a world by doing, not by being told: no labels, no dataset, no task. Python, one dependency, runs on a laptop.', repo: 'https://github.com/impire-io/poseres', version: 'v1.1.0' })]}
   description="PRA — Pose Resolution Architecture — is an AI that learns a world by doing, not by being told. No labels, no dataset, no task."
   project="pra"
-  active="research"
+  active="pra"
   footerNote="PRA is the research wing's central bet. Its build log is public: every reversal, every measurement, numbered and kept."
 >
   <header class="hero hero--sub">
@@ -25,8 +25,42 @@ import { software } from '../../lib/jsonld';
         a game, a space of ideas. The trick doesn't change. Act, see what shifts, keep what
         predicts. <b>That's PRA.</b>
       </p>
+      <p class="routes">
+        <a href="https://impire.io/poseres-book/">read the book ↓</a>
+        <a href="https://github.com/impire-io/poseres">the code →</a>
+        <a href="/pra/how-it-works.html">see it live →</a>
+      </p>
     </div>
   </header>
+
+  <section class="book" aria-label="the book">
+    <div class="inner">
+      <div class="lead">
+        <p class="eyebrow">the book · free to read</p>
+        <h2>The whole story, in plain words.</h2>
+        <p>
+          Sixteen chapters on why frozen models fail, what a sensorimotor triplet is, and how
+          a population of competing frames learns structure nobody specified — written to be
+          read without a maths background. It starts with a lawnmower, and it keeps the
+          failures in: where the theory bent, what got reversed, and what the measurements
+          actually said.
+        </p>
+        <p class="links-row">
+          <a class="enter enter--solid" href="https://impire.io/poseres-book/">Start reading →</a>
+          <a class="enter" href="https://impire.io/poseres-book/00-a-note-before-we-start.html">A note before we start</a>
+          <a class="enter" href="https://impire.io/poseres-book/part-5-the-long-run/13-the-log-it-put-back.html">The Minecraft chapter</a>
+        </p>
+      </div>
+      <ol class="parts">
+        <li><b>One</b><span>The problem</span></li>
+        <li><b>Two</b><span>The triplet</span></li>
+        <li><b>Three</b><span>The mechanism</span></li>
+        <li><b>Four</b><span>The continuity guarantee</span></li>
+        <li><b>Five</b><span>The long run</span></li>
+        <li><b>Six</b><span>Teachers</span></li>
+      </ol>
+    </div>
+  </section>
 
   <main class="prose">
     <p>
@@ -163,6 +197,60 @@ import { software } from '../../lib/jsonld';
     <a class="enter" href="https://impire.io/poseres-book/">Read the book (draft) →</a>
     <a class="enter" href="/pra/how-it-works.html">See how it works, live →</a>
     <a class="enter" href="https://github.com/impire-io/poseres/tree/main/hq/02-DESIGN">Read the spec →</a>
+    <a class="enter" href="/research/">How research is run here →</a>
   </div>
   <p class="micro">fair-code · one dependency · runs on a laptop</p>
 </BaseLayout>
+
+<style>
+  .book {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-raise);
+  }
+  .book .inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 44px 28px 48px;
+    display: grid;
+    grid-template-columns: minmax(0, 58ch) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .book h2 {
+    margin: 0 0 14px;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    font-weight: 620;
+    text-wrap: balance;
+  }
+  .book .eyebrow { color: var(--a); }
+  .book p { margin: 0 0 20px; color: var(--ink-dim); }
+  .book .links-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  .parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .parts li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding: 9px 2px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .parts b {
+    font: 600 0.7rem var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--a);
+    min-width: 46px;
+  }
+  @media (max-width: 860px) {
+    .book .inner { grid-template-columns: 1fr; gap: 28px; padding: 34px 28px 38px; }
+  }
+</style>

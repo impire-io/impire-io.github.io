@@ -50,9 +50,9 @@ const vars = [
           )}
           {s.step === 'all' && (
             <p class="step__cta">
-              <a class="enter enter--solid" href="https://github.com/impire-io/soulstream">Get soulstream →</a>
-              <a class="enter" href="/soulsystem/">Study the map →</a>
+              <a class="enter enter--solid" href="/soulstream/get-started/">Get started →</a>
               <a class="enter" href="/soulstream/">Start with the record →</a>
+              <a class="enter" href="/soulsystem/">Study the map →</a>
             </p>
           )}
         </section>
@@ -225,17 +225,24 @@ const vars = [
   .story[data-focus='soulrealm'] .detail--soulrealm,
   .story[data-focus='soulfold'] .detail--soulfold,
   .story[data-focus='soulnode'] .detail--soulnode { opacity: 1; }
-  /* the schematic draws its body's own node — the halo stays as its glow */
-  .story .body .core { transition: opacity 0.3s; }
+  /* the schematic draws its body's own nodes; the halo stays as a glow behind
+     it, pulled back so it lights the drawing instead of washing it out */
+  .story .body .core, .story .body .halo { transition: opacity 0.3s; }
   .story[data-focus='soulstream'] .body--soulstream .core,
   .story[data-focus='soulidentity'] .body--soulidentity .core,
   .story[data-focus='soulrealm'] .body--soulrealm .core,
   .story[data-focus='soulfold'] .body--soulfold .core { opacity: 0; }
+  .story[data-focus='soulstream'] .body--soulstream .halo,
+  .story[data-focus='soulidentity'] .body--soulidentity .halo,
+  .story[data-focus='soulrealm'] .body--soulrealm .halo,
+  .story[data-focus='soulfold'] .body--soulfold .halo,
+  .story[data-focus='soulnode'] .body--soulnode .halo { opacity: 0.22; }
 
   @media (max-width: 900px) {
     /* big enough to read is big enough to collide: the caption under the map
        carries the name instead, and focused steps zoom harder */
     .story .lbl-name, .story .lbl-role { display: none; }
+    .story .world { --zb: 1.2; }
     .story:not([data-focus='overview']):not([data-focus='all']) .world { --zb: 1.35; }
   }
 

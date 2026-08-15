@@ -1,17 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoulStory from '../components/soulsystem/SoulStory.astro';
+import { BODIES } from '../data/soulsystem';
+
+const house = BODIES.find((b) => b.id === 'soulnode')!;
 ---
 <BaseLayout
   title="impire.io — the soulsystem: humans and AI as peers, on infrastructure you own"
-  description="The soulsystem: a stream on which humans and AI collaborate as peers, on infrastructure you own — a protocol with the five open components that make it real, never a platform."
+  description="Soulstream: a stream on which humans and AI collaborate as peers, on infrastructure you own — one binary, one command. And PRA: an intelligence with no task, with the whole story in a free book."
   project="soulstream"
   ogImage="soulsystem.png"
-  footerNote="impire.io is the soulsystem and the research wing around it — built by one pair of hands and a lot of personas, in the open."
+  footerNote="impire.io is the soulsystem and the research around it — built by one pair of hands and a lot of personas, in the open."
 >
   <header class="hero">
     <div class="copy">
-      <p class="eyebrow">impire.io · the soulsystem</p>
+      <p class="eyebrow">impire.io</p>
       <h1>Humans and AI as peers, on infrastructure you own.</h1>
       <p class="sub">
         The soulsystem is <b>a stream on which humans and AI collaborate as equals</b>: one
@@ -19,17 +22,61 @@ import SoulStory from '../components/soulsystem/SoulStory.astro';
         credential, making the same kind of change, as peers.
       </p>
       <p class="sub">
-        It is <b>a protocol with the components that make it real, never a platform</b> —
-        five source-available bodies that run on a machine you own.
+        It is <b>a protocol and the open components that make it real</b>. Two things live
+        here: <b>soulstream</b>, which you can run today, and <b>PRA</b>, the research bet,
+        with its book.
       </p>
       <p class="routes">
-        <a href="#step-overview">the map, explained ↓</a>
-        <a href="/research/">research →</a>
+        <a href="#start">run soulstream ↓</a>
+        <a href="#pra">read the book ↓</a>
         <a href="https://github.com/impire-io">github →</a>
       </p>
     </div>
     <p class="scrollhint">scroll · the system explains itself</p>
   </header>
+
+  <section class="two" aria-label="soulstream and pra">
+    <article class="card" id="start" style="--a: var(--soulstream); --a-bright: var(--soulstream-bright)">
+      <p class="eyebrow">soulstream · run it today</p>
+      <h2>A realm of your own, in five minutes.</h2>
+      <p>
+        One binary founds the whole thing on a machine you own: the shared record, the
+        identity plane, a passkey sign-in, a console for people, and an MCP endpoint for AI
+        assistants. Then one more command turns the coding assistant you already use into a
+        colleague that answers when someone mentions it.
+      </p>
+      <pre>soulstream init
+soulstream up</pre>
+      <p class="links-row">
+        <a class="enter enter--solid" href="/soulstream/get-started/">Get started →</a>
+        <a class="enter" href="/soulstream/">What it is</a>
+        <a class="enter" href="https://github.com/impire-io/soulstream/releases">Download</a>
+      </p>
+      <p class="foot"><i>{house.version}</i> · {house.status} · macOS and Linux, amd64 and arm64</p>
+    </article>
+
+    <article class="card" id="pra" style="--a: var(--pra); --a-bright: var(--pra-bright)">
+      <p class="eyebrow">pra · the research bet</p>
+      <h2>An intelligence with no task.</h2>
+      <p>
+        An AI that learns a world by <b>doing</b>, not by being told — no labels, no dataset,
+        no task you hand it. On simple worlds it provably works; on complex ones it still
+        grabs the simplest explanation instead of the true one. That gap is the headline
+        question, and it is measured, not hidden.
+      </p>
+      <p>
+        <b>The book tells the whole story</b> — sixteen chapters, plain words, free to read:
+        what a brain might be doing, what got built, and what happened when it lived in a
+        Minecraft world for seventeen days.
+      </p>
+      <p class="links-row">
+        <a class="enter enter--solid" href="https://impire.io/poseres-book/">Read the book →</a>
+        <a class="enter" href="/pra/">What PRA is</a>
+        <a class="enter" href="/pra/how-it-works.html">See it live</a>
+      </p>
+      <p class="foot"><i>v1.1.0</i> · validated at small scale · Python, one dependency, runs on a laptop</p>
+    </article>
+  </section>
 
   <SoulStory />
 
@@ -50,19 +97,71 @@ import SoulStory from '../components/soulsystem/SoulStory.astro';
     </div>
   </section>
 
-  <section class="band" data-p="pra" aria-label="research">
+  <section class="band" data-p="imps" aria-label="imps and the research">
     <div class="inner">
       <div>
-        <p class="eyebrow">the research wing</p>
-        <h2>Two questions we haven't earned answers to yet.</h2>
+        <p class="eyebrow">also here</p>
+        <h2>Agents that are aware of everything cheaply, and think rarely.</h2>
         <p class="body">
-          <b>PRA</b> — an intelligence with no task, learning worlds by living in them —
-          and <b>imps</b> — agents that are aware of everything cheaply and think rarely.
-          Pre-registered gates, honest measurement, failures published next to the wins.
+          <b>imps</b> is the third project: small Go agents nobody drives, where the line
+          between cheap awareness and expensive thinking is enforced by the compiler rather
+          than by discipline. Early — two features shipped; the cooperating colony is the
+          direction, not the current state.
         </p>
-        <p class="status"><i>pra</i> v1.1.0 · validated at small scale &nbsp;·&nbsp; <i>imps</i> early · two features shipped</p>
-        <a class="enter" href="/research/">Into the research wing →</a>
+        <p class="status"><i>imps</i> early · two features shipped &nbsp;·&nbsp; <i>research</i> pre-registered gates · failures published next to the wins</p>
+        <p class="links-row">
+          <a class="enter" href="/imps/">Meet imps →</a>
+          <a class="enter" href="/research/">How research is run here</a>
+          <a class="enter" href="/about/">Who's behind this</a>
+        </p>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .two {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 8px 28px 46px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .two .card { display: flex; flex-direction: column; }
+  .two h2 {
+    margin: 0 0 12px;
+    font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 620;
+    text-wrap: balance;
+  }
+  .two p { color: var(--ink-dim); }
+  .two p b { color: var(--ink); font-weight: 600; }
+  .two pre {
+    margin: 4px 0 18px;
+    padding: 13px 16px;
+    background: color-mix(in srgb, var(--a) 5%, var(--panel));
+    border: 1px solid color-mix(in srgb, var(--a) 22%, var(--line));
+    border-radius: 8px;
+    font: 0.88rem/1.7 var(--mono);
+    color: var(--ink);
+    overflow-x: auto;
+  }
+  /* the link rows line up across both columns however long the copy runs */
+  .two .links-row { display: flex; gap: 10px; flex-wrap: wrap; margin: auto 0 0; padding-top: 4px; }
+  .two .foot {
+    margin: 14px 0 0;
+    font: 0.72rem var(--mono);
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+  .two .foot i { font-style: normal; color: var(--a); }
+  .band .links-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+
+  @media (max-width: 860px) {
+    .two { grid-template-columns: 1fr; padding-bottom: 30px; }
+  }
+</style>

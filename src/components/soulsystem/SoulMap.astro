@@ -5,6 +5,7 @@
 //                per-step focus transforms; gather lines draw in for the house
 // All geometry comes from src/data/soulsystem.ts; all color from tokens.
 import { BODIES, ORBITS, VIEW } from '../../data/soulsystem';
+import MapDetails from './MapDetails.astro';
 
 interface Props {
   mode: 'story' | 'static';
@@ -59,6 +60,8 @@ const center = BODIES.find((b) => b.id === 'soulstream')!;
           </text>
         </a>
       ))}
+
+      {mode === 'story' && <MapDetails />}
     </g>
   </svg>
   {mode === 'static' && (

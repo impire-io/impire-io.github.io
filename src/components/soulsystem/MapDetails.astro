@@ -17,7 +17,9 @@ import { BODIES } from '../../data/soulsystem';
 // renamed role can never drift out of the drawing
 const gathered = BODIES.filter((b) => b.id !== 'soulnode');
 const gatheredLabel = gathered.map((b) => b.role.replace(/^the /, '')).join(' · ');
-const dotStart = 479 - ((gathered.length - 1) * 26) / 2;
+// the block sits below where the gather lines run, so nothing crosses it
+const HOUSE_X = 445;
+const dotStart = HOUSE_X - ((gathered.length - 1) * 26) / 2;
 ---
 <g class="details" aria-hidden="true">
   {/* ---- the record: two kinds of author, one log ---- */}
@@ -118,17 +120,15 @@ const dotStart = 479 - ((gathered.length - 1) * 26) / 2;
 
   {/* ---- the house: the four, gathered into one command ---- */}
   <g class="detail detail--soulnode">
-    <text class="micro mid" x="479" y="388">{gatheredLabel}</text>
+    <text class="micro mid" x={HOUSE_X} y="448">{gatheredLabel}</text>
     {gathered.map((b, i) => (
-      <circle cx={dotStart + i * 26} cy="404" r="5" style={`fill: var(--${b.hue})`} />
+      <circle cx={dotStart + i * 26} cy="464" r="5" style={`fill: var(--${b.hue})`} />
     ))}
-    <path class="stroke" d="M479 412v6" vector-effect="non-scaling-stroke" />
-    <polygon class="fill" points="474,417 484,417 479,426" />
+    <path class="stroke" d="M445 472v6" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="440,477 450,477 445,486" />
 
-    <rect class="wash" x="386" y="428" width="224" height="52" rx="8" vector-effect="non-scaling-stroke" />
-    <text class="cmd mid" x="498" y="460">soulstream init &amp;&amp; up</text>
-
-    <text class="cap mid" x="498" y="502">one binary · your machine</text>
+    <rect class="wash" x="333" y="490" width="224" height="52" rx="8" vector-effect="non-scaling-stroke" />
+    <text class="cmd mid" x={HOUSE_X} y="522">soulstream init &amp;&amp; up</text>
   </g>
 </g>
 
@@ -159,6 +159,11 @@ const dotStart = 479 - ((gathered.length - 1) * 26) / 2;
   .detail .micro { font-size: 10px; letter-spacing: 0.03em; fill: var(--ink-dim); }
   .detail .cap { font-size: 10.5px; letter-spacing: 0.05em; fill: var(--b); }
   .detail .cmd { font-size: 15px; letter-spacing: 0.01em; fill: var(--ink); }
+  /* the house frames the whole system, so it zooms least — its type is set
+     larger to land at the same on-screen size as the other schematics */
+  .detail--soulnode .micro { font-size: 13px; }
+  .detail--soulnode .cap { font-size: 13px; }
+
   .detail .mid { text-anchor: middle; }
   .detail .end { text-anchor: end; }
   .detail .start { text-anchor: start; }

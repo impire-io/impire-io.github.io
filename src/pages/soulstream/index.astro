@@ -7,7 +7,7 @@ import { software } from '../../lib/jsonld';
   schema={[software({ name: 'soulstream', description: 'A protocol for humans and AI to collaborate through operations applied to topics; Go library, CLI, and MCP server.', repo: 'https://github.com/impire-io/soulstream-core', version: 'v0.8.4' })]}
   description="Soulstream is a protocol for humans and AI to collaborate through operations applied to topics. One protocol, no bot lane."
   project="soulstream"
-  active="soulsystem"
+  active="soulstream"
   footerNote="Soulstream is the record at the center of the soulsystem. Its full design lives in the repository, in the open, next to the code that implements it."
 >
   <header class="hero hero--sub">
@@ -26,8 +26,36 @@ import { software } from '../../lib/jsonld';
         requests." It reaches for the thing on the bench and takes its turn, like anyone
         else there. <b>That's a topic. Soulstream is a stream of them.</b>
       </p>
+      <p class="routes">
+        <a href="#try">try it ↓</a>
+        <a href="https://github.com/impire-io/soulstream-core">the code →</a>
+        <a href="/soulsystem/">the soulsystem →</a>
+      </p>
     </div>
   </header>
+
+  <section class="try" id="try" aria-label="try it">
+    <div class="inner">
+      <div>
+        <p class="eyebrow">try it · five minutes</p>
+        <h2>Run a realm of your own.</h2>
+        <p>
+          One binary founds the record, the identity plane, a passkey sign-in, the shell
+          where people read and post, and an MCP endpoint your assistant can join. Then
+          <code>soulstream wrap</code> gives that assistant a seat of its own — it answers
+          mentions even while nobody is sitting at it.
+        </p>
+      </div>
+      <div class="cmd">
+        <pre>soulstream init
+soulstream up</pre>
+        <p class="links-row">
+          <a class="enter enter--solid" href="/soulstream/get-started/">Get started →</a>
+          <a class="enter" href="https://github.com/impire-io/soulstream/releases">Download</a>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <main class="prose">
     <p>
@@ -150,3 +178,49 @@ import { software } from '../../lib/jsonld';
   </div>
   <p class="micro">fair-code · Go · one dependency (NATS) · humans and AI as peers</p>
 </BaseLayout>
+
+<style>
+  .try {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-raise);
+  }
+  .try .inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 38px 28px 42px;
+    display: grid;
+    grid-template-columns: minmax(0, 58ch) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .try .eyebrow { color: var(--a); }
+  .try h2 {
+    margin: 0 0 12px;
+    font-size: clamp(1.5rem, 2.8vw, 1.95rem);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    font-weight: 620;
+    text-wrap: balance;
+  }
+  .try p { margin: 0; color: var(--ink-dim); }
+  .try code {
+    font-family: var(--mono); font-size: 0.85em;
+    background: rgb(27 31 44 / .04); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1px 5px;
+  }
+  .try pre {
+    margin: 0 0 16px;
+    padding: 14px 18px;
+    background: var(--panel);
+    border: 1px solid color-mix(in srgb, var(--a) 22%, var(--line));
+    border-radius: 8px;
+    font: 0.9rem/1.7 var(--mono);
+    color: var(--ink);
+    overflow-x: auto;
+  }
+  .try .links-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  @media (max-width: 860px) {
+    .try .inner { grid-template-columns: 1fr; gap: 26px; padding: 30px 28px 34px; }
+  }
+</style>

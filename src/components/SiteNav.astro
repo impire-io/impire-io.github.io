@@ -1,13 +1,15 @@
 ---
 interface Props {
-  /** which top-level section is current: 'soulsystem' | 'research' | 'about' */
+  /** which top-level section is current: 'soulstream' | 'pra' | 'imps' | 'about' */
   active?: string;
 }
 const { active } = Astro.props;
 const link = (href: string, label: string, key: string) => ({ href, label, key });
+// the two things people arrive for, then the third project, then the person
 const links = [
-  link('/soulsystem/', 'soulsystem', 'soulsystem'),
-  link('/research/', 'research', 'research'),
+  link('/soulstream/', 'soulstream', 'soulstream'),
+  link('/pra/', 'pra', 'pra'),
+  link('/imps/', 'imps', 'imps'),
   link('/about/', 'about', 'about'),
 ];
 ---
