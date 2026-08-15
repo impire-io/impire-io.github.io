@@ -2,7 +2,7 @@
 order: 2
 step: soulidentity
 title: Who is who, without handing out keys.
-eyebrow: soulidentity · the name
+eyebrow: soulstream-identity · the name
 ---
 A persona's keys are born here on first touch and **never leave**. Like an
 ssh-agent, the name signs instead of handing out secrets: work arrives, a

@@ -28,10 +28,10 @@ const SECTIONS = [
 ];
 
 const ORBIT_REPOS = [
-  ['soulidentity', 'the name — identity and signing for personas'],
-  ['soulrealm', 'the room — where agents and tools run as workloads'],
-  ['soulfold', 'the door — a self-hosted, passkey-first OIDC provider'],
-  ['soulnode', 'the house — the whole stack as one binary'],
+  ['soulstream-identity', 'the name — identity and signing for personas'],
+  ['soulstream-workloads', 'the room — where agents and tools run as workloads, and the wrapper that turns your own assistant into one'],
+  ['soulstream-idp', 'the door — a self-hosted, passkey-first OIDC provider'],
+  ['soulstream', 'the house — the whole stack as one binary'],
 ];
 
 // ---------------------------------------------------------------- html → md

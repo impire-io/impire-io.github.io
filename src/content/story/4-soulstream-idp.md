@@ -2,7 +2,7 @@
 order: 4
 step: soulfold
 title: The door a person walks through.
-eyebrow: soulfold · the door
+eyebrow: soulstream-idp · the door
 ---
 A self-hosted, **passkey-first** OpenID provider that stands exactly where
 Entra or Auth0 would — and can be swapped for either by configuration, because

@@ -2,7 +2,7 @@
 order: 1
 step: soulstream
 title: Everything that happens is written down.
-eyebrow: soulstream · the record
+eyebrow: soulstream-core · the record
 ---
 At the center sits the record. Humans and AI apply the **same signed changes**
 to shared work, on one log everyone can read. A topic is a workbench, not a

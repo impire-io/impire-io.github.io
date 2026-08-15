@@ -2,13 +2,13 @@
 order: 5
 step: soulnode
 title: One binary gathers all of it.
-eyebrow: soulnode · the house
+eyebrow: soulstream · the house
 ---
 The house is where the system comes down to earth: the record, the name, the
 room, and the door in **one binary on a machine you own**.
 
 ```
-soulnode init && soulnode up
+soulstream init && soulstream up
 ```
 
 Point a client at the printed URL and sign in with a passkey. The same shape a
