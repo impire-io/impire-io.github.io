@@ -70,7 +70,7 @@ export const BODIES: Body[] = [
     zoom: 2.2,
     hue: 'soulrealm',
     status: 'three backends · wrap',
-    version: 'v0.3.0',
+    version: 'v0.4.0',
     repo: 'https://github.com/impire-io/soulstream-workloads',
     oneLiner:
       "The runtime: launches, supervises, observes, and retires a realm's agents and tools as workloads; everything worth keeping flows back to the record.",
@@ -78,13 +78,13 @@ export const BODIES: Body[] = [
   {
     id: 'soulfold',
     name: 'soulstream-idp',
-    role: 'the door',
+    role: 'the sign-in',
     cx: 221, cy: 372, coreR: 6, haloR: 30,
     label: { x: 189, y: 368, anchor: 'end' },
     zoom: 2.2,
     hue: 'soulfold',
     status: 'passkeys · console',
-    version: 'v0.4.1',
+    version: 'v0.5.0',
     repo: 'https://github.com/impire-io/soulstream-idp',
     oneLiner:
       'The default IAM: a self-hosted, passkey-first OIDC provider — who exists and who belongs — standing exactly where Entra or any OIDC provider may stand instead.',
@@ -96,8 +96,8 @@ export const BODIES: Body[] = [
     cx: 706, cy: 446, coreR: 8, haloR: 38,
     label: { x: 742, y: 442, anchor: 'start' },
     zoom: 1.35,
-    // frame the house with the rest of the system still in view
-    focus: { x: 590, y: 375 },
+    // frame the house, its gather lines, and the one-binary detail below them
+    focus: { x: 600, y: 430 },
     hue: 'soulnode',
     status: 'pre-release binaries',
     version: 'v0.11.0-rc.2',
@@ -107,11 +107,14 @@ export const BODIES: Body[] = [
   },
 ];
 
-/** translate–scale–translate sandwich mapping the focus point to the viewBox
-    center at the body's zoom; avoids transform-origin/transform-box, which
-    are inconsistent for SVG across engines. */
-export function focusTransform(body: Body): string {
+/** Per-body focus variables for the story's map.
+    The transform itself is one CSS rule on `.world` (a translate–scale–translate
+    sandwich, avoiding transform-origin/transform-box, which are inconsistent for
+    SVG across engines); each focus step only swaps these three values. Keeping
+    the zoom as a number rather than a baked transform is what lets narrow
+    screens multiply it by `--zb` and stay legible. */
+export function focusVars(body: Body): string {
   const fx = body.focus?.x ?? body.cx;
   const fy = body.focus?.y ?? body.cy;
-  return `translate(${VIEW.cx}px, ${VIEW.cy}px) scale(${body.zoom}) translate(${-fx}px, ${-fy}px)`;
+  return `--z-${body.id}: ${body.zoom}; --fx-${body.id}: ${fx}px; --fy-${body.id}: ${fy}px`;
 }

@@ -6,8 +6,8 @@ eyebrow: the soulsystem
 ---
 A signed log that humans and AI change together — one drafts, another revises,
 a third marks the work done, and every change carries the name of whoever made
-it. Human or AI, **the same kind of credential, the same operations, the same
-door**.
+it. Human or AI, **the same kind of credential, the same
+operations — as peers**.
 
 Then the questions the record couldn't answer became projects of their own:
 who are you, where does a mind actually run, how does a stranger get in, and

@@ -6,18 +6,31 @@
 // runtime math, no dependencies.
 import { getCollection, render } from 'astro:content';
 import SoulMap from './SoulMap.astro';
-import { BODIES, focusTransform } from '../../data/soulsystem';
+import { BODIES, VIEW, focusVars } from '../../data/soulsystem';
 
 const entries = (await getCollection('story')).sort((a, b) => a.data.order - b.data.order);
 const steps = await Promise.all(
   entries.map(async (e) => ({ ...e.data, Content: (await render(e)).Content })),
 );
 const bodyById = new Map(BODIES.map((b) => [b.id, b]));
-const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; ');
+const vars = [
+  `--vcx: ${VIEW.cx}px`,
+  `--vcy: ${VIEW.cy}px`,
+  ...BODIES.map(focusVars),
+].join('; ');
 ---
-<section class="story" data-focus="overview" style={tfVars} aria-label="the soulsystem, explained">
+<section class="story" data-focus="overview" style={vars} aria-label="the soulsystem, explained">
   <figure class="story__map">
     <SoulMap mode="story" />
+    {/* narrow screens drop the in-map labels (they collide once they are big
+        enough to read) and name the focused body here instead */}
+    <figcaption class="story__now" aria-hidden="true">
+      <span data-for="overview">the soulsystem · five bodies</span>
+      {BODIES.map((b) => (
+        <span data-for={b.id}><b style={`color: var(--${b.hue})`}>{b.name}</b> · {b.role}</span>
+      ))}
+      <span data-for="all">five bodies · one record</span>
+    </figcaption>
   </figure>
   <div class="story__steps">
     {steps.map((s) => {
@@ -51,26 +64,34 @@ const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; '
 <style>
   .story {
     display: grid;
-    grid-template-columns: 56% minmax(0, 1fr);
-    gap: 56px;
-    max-width: 1200px;
+    grid-template-columns: minmax(0, 60%) minmax(0, 1fr);
+    gap: 48px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 28px;
   }
   .story__map {
     position: sticky;
     top: var(--nav-h);
-    height: min(84vh, 660px);
+    height: min(84vh, 680px);
     align-self: start;
     margin: 0;
-    display: flex;
-    align-items: center;
+    display: grid;
+    place-items: center;
     overflow: hidden;
+  }
+  /* the map must fill the frame. As a flex item it collapsed to the SVG's
+     intrinsic 300px — a fixed-size drawing at every viewport, which is why it
+     read tiny; sizing both axes hands the scaling back to the viewBox. */
+  .story__map :global(.map) {
+    margin: 0;
+    width: 100%;
+    height: 100%;
   }
   .story__map :global(svg) {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
   }
   .step {
     min-height: 90vh;
@@ -111,15 +132,42 @@ const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; '
   .step__meta .src:hover { text-decoration: underline; text-underline-offset: 3px; }
   .step__cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 18px 0 0; }
 
-  @media (max-width: 860px) {
-    .story { display: block; }
+  .story__now { display: none; }
+  .story__now span { display: none; }
+  .story__now b { font-weight: 650; }
+
+  @media (max-width: 900px) {
+    .story { display: block; max-width: 720px; }
     .story__map {
       top: 0;
-      height: min(44vh, 46svh);
-      background: var(--bg);
       z-index: 2;
+      /* full-bleed: on a phone the map wants every pixel it can get */
+      width: calc(100% + 56px);
+      margin-inline: -28px;
+      height: clamp(230px, 44svh, 380px);
+      grid-template-rows: minmax(0, 1fr) auto;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 10px 18px -14px rgb(27 31 44 / 0.4);
     }
-    .step { min-height: 72vh; }
+    .story__map :global(.map) { min-height: 0; }
+    .story__now {
+      display: block;
+      padding: 0 18px 8px;
+      font: 0.74rem var(--mono);
+      letter-spacing: 0.04em;
+      color: var(--ink-faint);
+      text-align: center;
+    }
+    .step { min-height: 78svh; padding-top: 10px; }
+
+    .story[data-focus='overview'] .story__now span[data-for='overview'],
+    .story[data-focus='soulstream'] .story__now span[data-for='soulstream'],
+    .story[data-focus='soulidentity'] .story__now span[data-for='soulidentity'],
+    .story[data-focus='soulrealm'] .story__now span[data-for='soulrealm'],
+    .story[data-focus='soulfold'] .story__now span[data-for='soulfold'],
+    .story[data-focus='soulnode'] .story__now span[data-for='soulnode'],
+    .story[data-focus='all'] .story__now span[data-for='all'] { display: inline; }
   }
   @media (max-height: 500px) {
     .story__map { position: static; height: auto; }
@@ -129,18 +177,36 @@ const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; '
 <style is:global>
   /* ---- the story's state machine (global: it reaches into the map SVG) ---- */
 
+  /* One transform rule; a focus step only swaps --z/--fx/--fy (from
+     src/data/soulsystem.ts). --zb is the narrow-screen zoom boost: a phone
+     shows the same schematic in fewer pixels, so it leans in harder. */
   .story .world {
+    transform: translate(var(--vcx), var(--vcy))
+      scale(calc(var(--z, 1) * var(--zb, 1)))
+      translate(calc(var(--fx, var(--vcx)) * -1), calc(var(--fy, var(--vcy)) * -1));
     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
   }
-  .story[data-focus='soulstream'] .world   { transform: var(--tf-soulstream); }
-  .story[data-focus='soulidentity'] .world { transform: var(--tf-soulidentity); }
-  .story[data-focus='soulrealm'] .world    { transform: var(--tf-soulrealm); }
-  .story[data-focus='soulfold'] .world     { transform: var(--tf-soulfold); }
-  .story[data-focus='soulnode'] .world     { transform: var(--tf-soulnode); }
+  .story[data-focus='soulstream'] .world {
+    --z: var(--z-soulstream); --fx: var(--fx-soulstream); --fy: var(--fy-soulstream);
+  }
+  .story[data-focus='soulidentity'] .world {
+    --z: var(--z-soulidentity); --fx: var(--fx-soulidentity); --fy: var(--fy-soulidentity);
+  }
+  .story[data-focus='soulrealm'] .world {
+    --z: var(--z-soulrealm); --fx: var(--fx-soulrealm); --fy: var(--fy-soulrealm);
+  }
+  .story[data-focus='soulfold'] .world {
+    --z: var(--z-soulfold); --fx: var(--fx-soulfold); --fy: var(--fy-soulfold);
+  }
+  .story[data-focus='soulnode'] .world {
+    --z: var(--z-soulnode); --fx: var(--fx-soulnode); --fy: var(--fy-soulnode);
+  }
 
   .story .body, .story .orbits ellipse { transition: opacity 0.35s; }
   .story .lbl-name, .story .lbl-role { transition: opacity 0.35s; }
+  .story .lbl-name { font-size: 17px; }
+  .story .lbl-role { font-size: 11.5px; }
 
   /* while a body is focused: labels off, others dimmed, orbits faded */
   .story:not([data-focus='overview']):not([data-focus='all']) :is(.lbl-name, .lbl-role) { opacity: 0; }
@@ -152,6 +218,27 @@ const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; '
   /* the house keeps the system in frame — dim gently, it is gathering them */
   .story[data-focus='soulnode'] .body:not(.body--soulnode) { opacity: 0.45; }
 
+  /* ---- the per-step schematics (MapDetails.astro) ---- */
+  .story .detail { opacity: 0; transition: opacity 0.4s ease 0.15s; }
+  .story[data-focus='soulstream'] .detail--soulstream,
+  .story[data-focus='soulidentity'] .detail--soulidentity,
+  .story[data-focus='soulrealm'] .detail--soulrealm,
+  .story[data-focus='soulfold'] .detail--soulfold,
+  .story[data-focus='soulnode'] .detail--soulnode { opacity: 1; }
+  /* the schematic draws its body's own node — the halo stays as its glow */
+  .story .body .core { transition: opacity 0.3s; }
+  .story[data-focus='soulstream'] .body--soulstream .core,
+  .story[data-focus='soulidentity'] .body--soulidentity .core,
+  .story[data-focus='soulrealm'] .body--soulrealm .core,
+  .story[data-focus='soulfold'] .body--soulfold .core { opacity: 0; }
+
+  @media (max-width: 900px) {
+    /* big enough to read is big enough to collide: the caption under the map
+       carries the name instead, and focused steps zoom harder */
+    .story .lbl-name, .story .lbl-role { display: none; }
+    .story:not([data-focus='overview']):not([data-focus='all']) .world { --zb: 1.35; }
+  }
+
   .story .gather line { transition: opacity 0.5s, stroke-dashoffset 0.9s ease 0.15s; }
   .story[data-focus='soulnode'] .gather line { opacity: 0.85; stroke-dashoffset: 0; }
   .story[data-focus='all'] .gather line { opacity: 0.3; stroke-dashoffset: 0; }
@@ -160,16 +247,18 @@ const tfVars = BODIES.map((b) => `--tf-${b.id}: ${focusTransform(b)}`).join('; '
   .story--enhanced .step { opacity: 0.4; transition: opacity 0.3s; }
   .story--enhanced .step.is-active { opacity: 1; }
 
-  /* reduced motion: no zoom, no panning, no draw-on — instant opacity states */
-  .story--reduced .world { transform: none !important; transition: none !important; }
-  .story--reduced .body, .story--reduced .orbits ellipse,
+  /* reduced motion: every state still lands — a step's schematic is the
+     content, and dropping the zoom would leave it unreadable — but it lands
+     instantly, with nothing animating, panning, or drawing on */
+  .story--reduced .world, .story--reduced .body, .story--reduced .orbits ellipse,
   .story--reduced .lbl-name, .story--reduced .lbl-role,
+  .story--reduced .detail, .story--reduced .body .core,
   .story--reduced .step { transition: none !important; }
   .story--reduced .gather line { transition: none !important; stroke-dasharray: none; }
   @media (prefers-reduced-motion: reduce) {
-    .story .world { transform: none !important; transition: none !important; }
-    .story .body, .story .orbits ellipse,
+    .story .world, .story .body, .story .orbits ellipse,
     .story .lbl-name, .story .lbl-role,
+    .story .detail, .story .body .core,
     .story .step { transition: none !important; }
     .story .gather line { transition: none !important; stroke-dasharray: none; }
   }

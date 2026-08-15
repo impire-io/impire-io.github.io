@@ -13,18 +13,18 @@ const descs: Record<string, string> = {
   soulstream:
     'Everything that happens is written down — humans and AI applying the <b>same signed changes</b> to shared work, on one log everyone can read. No bot API, no human API. Every other body writes here.',
   soulidentity:
-    "Who is who. A persona's keys live here — born on first touch, never leaving — and a stranger's credential becomes a scoped one at the door. <b>No passwords, no per-person database.</b>",
+    "Who is who. A persona's keys live here — born on first touch, never leaving — and a stranger's credential becomes a scoped one at admission. <b>No passwords, no per-person database.</b>",
   soulrealm:
     'Where minds actually run. An agent or a tool is a declaration; soulstream-workloads runs it — the <b>same declaration, unchanged</b> — natively, in a microVM, or as a Kubernetes pod.',
   soulfold:
-    'The door a person walks through. A passkey-first OpenID provider that stands <b>exactly where Entra or Auth0 would</b>. No passwords, ever; enrol by single-use invitation, and an admin console to run it.',
+    'The sign-in a person walks through. A passkey-first OpenID provider that stands <b>exactly where Entra or Auth0 would</b>. No passwords, ever; enrol by single-use invitation, and an admin console to run it.',
   soulnode:
-    'Where the whole system comes down to earth. One binary gathers the record, the name, the room, and the door. <b><code>soulstream init &amp;&amp; up</code></b>, and a person signs in with a passkey.',
+    'Where the whole system comes down to earth. One binary gathers the record, the name, the room, and the sign-in. <b><code>soulstream init &amp;&amp; up</code></b>, and a person signs in with a passkey.',
 };
 ---
 <BaseLayout
   title="The soulsystem — five bodies, one record at the center"
-  description="The soulsystem: five open components with a signed record at the center — the record, the name, the room, the door, and the house that gathers them into one binary."
+  description="The soulsystem: five open components with a signed record at the center — the record, the name, the room, the sign-in, and the house that gathers them into one binary."
   project="soulstream"
   active="soulsystem"
   ogImage="soulsystem.png"
@@ -73,7 +73,7 @@ const descs: Record<string, string> = {
 
     <p class="system-close">
       <b>Four make the system; the fifth is where you live in it.</b> The record at the
-      center, the name, the room, and the door in orbit, and the house that carries them all.
+      center, the name, the room, and the sign-in in orbit, and the house that carries them all.
       Grown one honest question at a time, in the open — with the reasoning, the reversals,
       and the measurements kept next to the code.
     </p>
@@ -83,5 +83,5 @@ const descs: Record<string, string> = {
     <a class="enter enter--solid" href="https://github.com/impire-io/soulstream">Get soulstream →</a>
     <a class="enter" href="/soulstream/">Start with the record →</a>
   </div>
-  <p class="micro">five open repositories · fair-code · humans and AI through the same door · no platform underneath</p>
+  <p class="micro">five open repositories · fair-code · humans and AI as peers · no platform underneath</p>
 </BaseLayout>

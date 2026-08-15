@@ -1,0 +1,166 @@
+---
+// Per-step schematics drawn into the soulsystem map (story mode only).
+//
+// Each group sits at its body's own coordinates inside `.world`, so the story's
+// focus transform magnifies it: a zoomed step shows what that body actually
+// does instead of a dot in an empty frame. Geometry is therefore authored
+// small — the narrowest focused viewport is a phone at zoom x --zb, roughly
+// 300x190 viewBox units around the focus point, and anything outside that gets
+// cropped. Strokes are non-scaling so the zoom never fattens a hairline; text
+// is in viewBox units on purpose, so it grows with the zoom.
+//
+// Decoration only: the meaning is in the step's prose, so the whole layer is
+// aria-hidden and invisible until JS sets data-focus.
+import { BODIES } from '../../data/soulsystem';
+
+// the house gathers the other four: names and hues come from the data, so a
+// renamed role can never drift out of the drawing
+const gathered = BODIES.filter((b) => b.id !== 'soulnode');
+const gatheredLabel = gathered.map((b) => b.role.replace(/^the /, '')).join(' · ');
+const dotStart = 479 - ((gathered.length - 1) * 26) / 2;
+---
+<g class="details" aria-hidden="true">
+  {/* ---- the record: two kinds of author, one log ---- */}
+  <g class="detail detail--soulstream">
+    <line class="spine" x1="302" y1="280" x2="566" y2="280" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="564,274 578,280 564,286" />
+
+    <rect class="wash" x="268" y="262" width="32" height="36" rx="5" vector-effect="non-scaling-stroke" />
+    <text class="micro mid" x="284" y="318">baseline</text>
+
+    <circle class="node" cx="336" cy="280" r="6" vector-effect="non-scaling-stroke" />
+    <circle class="node" cx="382" cy="280" r="6" vector-effect="non-scaling-stroke" />
+    <circle class="fill" cx="430" cy="280" r="9" />
+    <circle class="node" cx="478" cy="280" r="6" vector-effect="non-scaling-stroke" />
+    <circle class="node" cx="524" cy="280" r="6" vector-effect="non-scaling-stroke" />
+
+    {/* a person and an agent reaching for the same line */}
+    <circle class="node" cx="350" cy="200" r="7" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M339 220a11 11 0 0 1 22 0" vector-effect="non-scaling-stroke" />
+    <text class="micro end" x="330" y="204">human</text>
+    <path class="stroke" d="M356 226 379 264" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="374,258 382,270 368,266" />
+
+    <rect class="node" x="501" y="343" width="22" height="18" rx="4" vector-effect="non-scaling-stroke" />
+    <circle class="fill" cx="508" cy="352" r="1.8" />
+    <circle class="fill" cx="516" cy="352" r="1.8" />
+    <path class="stroke" d="M512 343v-6" vector-effect="non-scaling-stroke" />
+    <circle class="fill" cx="512" cy="335" r="1.8" />
+    <text class="micro start" x="534" y="356">agent</text>
+    <path class="stroke" d="M506 337 486 296" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="480,302 484,290 492,300" />
+
+    <text class="cap mid" x="404" y="376">the same operations · one log</text>
+  </g>
+
+  {/* ---- the name: work goes out, a signature comes back ---- */}
+  <g class="detail detail--soulidentity">
+    <circle class="node" cx="206" cy="188" r="12" vector-effect="non-scaling-stroke" />
+    <text class="micro mid" x="206" y="160">persona</text>
+
+    <rect class="wash" x="308" y="150" width="84" height="76" rx="8" vector-effect="non-scaling-stroke" />
+    <circle class="stroke" cx="334" cy="188" r="7" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M341 188h31M364 188v7M372 188v8" vector-effect="non-scaling-stroke" />
+    <text class="micro mid" x="350" y="244">keys stay here</text>
+
+    <path class="stroke" d="M222 172q42-26 84-12" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="298,154 310,161 297,166" />
+    <text class="micro mid" x="262" y="146">work</text>
+
+    <path class="stroke" d="M304 214q-42 24-82 -8" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="230,210 218,204 231,198" />
+    <text class="micro mid" x="258" y="248">signature</text>
+  </g>
+
+  {/* ---- the room: one declaration, three walls ---- */}
+  <g class="detail detail--soulrealm">
+    <text class="micro mid" x="663" y="132">one declaration</text>
+    <rect class="wash" x="618" y="140" width="90" height="38" rx="6" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M630 152h56M630 160h42M630 168h50" vector-effect="non-scaling-stroke" />
+
+    <path class="stroke" d="M663 180c0 16-100 12-100 32" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M663 180v34" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M663 180c0 16 100 12 100 32" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="558,212 568,212 563,222" />
+    <polygon class="fill" points="658,212 668,212 663,222" />
+    <polygon class="fill" points="758,212 768,212 763,222" />
+
+    <rect class="node" x="523" y="224" width="80" height="42" rx="6" vector-effect="non-scaling-stroke" />
+    <rect class="node dash" x="623" y="224" width="80" height="42" rx="6" vector-effect="non-scaling-stroke" />
+    <rect class="node dot" x="723" y="224" width="80" height="42" rx="6" vector-effect="non-scaling-stroke" />
+    <text class="micro mid" x="563" y="249">process</text>
+    <text class="micro mid" x="663" y="249">microVM</text>
+    <text class="micro mid" x="763" y="249">pod</text>
+
+    <text class="cap mid" x="663" y="292">one contract · three walls</text>
+  </g>
+
+  {/* ---- the sign-in: a passkey, and a slot anything standard can fill ---- */}
+  <g class="detail detail--soulfold">
+    <rect class="wash" x="176" y="306" width="66" height="104" rx="5" vector-effect="non-scaling-stroke" />
+    <path class="stroke" d="M188 306v104" vector-effect="non-scaling-stroke" />
+    <circle class="fill" cx="231" cy="360" r="3.5" />
+
+    <text class="micro mid" x="262" y="364">or</text>
+
+    <rect class="ghost" x="282" y="306" width="66" height="104" rx="5" vector-effect="non-scaling-stroke" />
+    <text class="micro mid ghost-t" x="315" y="354">any OIDC</text>
+    <text class="micro mid ghost-t" x="315" y="368">provider</text>
+
+    <path class="stroke" d="M108 366a14 14 0 0 1 24 0M112 373a10 10 0 0 1 16 0M116 379a6 6 0 0 1 8 0" vector-effect="non-scaling-stroke" />
+    <circle class="fill" cx="120" cy="384" r="2" />
+    <text class="micro mid" x="120" y="400">passkey</text>
+    <path class="stroke" d="M140 358h28" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="166,352 178,358 166,364" />
+
+    <text class="cap mid" x="221" y="442">no passwords · one slot</text>
+  </g>
+
+  {/* ---- the house: the four, gathered into one command ---- */}
+  <g class="detail detail--soulnode">
+    <text class="micro mid" x="479" y="388">{gatheredLabel}</text>
+    {gathered.map((b, i) => (
+      <circle cx={dotStart + i * 26} cy="404" r="5" style={`fill: var(--${b.hue})`} />
+    ))}
+    <path class="stroke" d="M479 412v6" vector-effect="non-scaling-stroke" />
+    <polygon class="fill" points="474,417 484,417 479,426" />
+
+    <rect class="wash" x="386" y="428" width="224" height="52" rx="8" vector-effect="non-scaling-stroke" />
+    <text class="cmd mid" x="498" y="460">soulstream init &amp;&amp; up</text>
+
+    <text class="cap mid" x="498" y="502">one binary · your machine</text>
+  </g>
+</g>
+
+<style>
+  /* hue per group, same convention the bodies use */
+  .detail--soulstream   { --b: var(--soulstream);   }
+  .detail--soulidentity { --b: var(--soulidentity); }
+  .detail--soulrealm    { --b: var(--soulrealm);    }
+  .detail--soulfold     { --b: var(--soulfold);     }
+  .detail--soulnode     { --b: var(--soulnode);     }
+
+  .detail .stroke,
+  .detail .spine { fill: none; stroke: var(--b); stroke-width: 1.4; }
+  .detail .spine { stroke-width: 1.6; }
+  .detail .fill { fill: var(--b); }
+  .detail .node { fill: var(--panel); stroke: var(--b); stroke-width: 1.4; }
+  .detail .wash {
+    fill: color-mix(in srgb, var(--b) 8%, var(--panel));
+    stroke: var(--b);
+    stroke-width: 1.4;
+  }
+  .detail .dash { stroke-dasharray: 5 4; }
+  .detail .dot { stroke-dasharray: 1.5 3.5; }
+  .detail .ghost { fill: none; stroke: var(--line-strong); stroke-width: 1.2; stroke-dasharray: 4 4; }
+  .detail .ghost-t { fill: var(--ink-faint); }
+
+  .detail text { font-family: var(--mono); }
+  .detail .micro { font-size: 10px; letter-spacing: 0.03em; fill: var(--ink-dim); }
+  .detail .cap { font-size: 10.5px; letter-spacing: 0.05em; fill: var(--b); }
+  .detail .cmd { font-size: 15px; letter-spacing: 0.01em; fill: var(--ink); }
+  .detail .mid { text-anchor: middle; }
+  .detail .end { text-anchor: end; }
+  .detail .start { text-anchor: start; }
+
+</style>

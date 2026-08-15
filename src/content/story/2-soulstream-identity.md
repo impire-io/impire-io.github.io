@@ -10,4 +10,4 @@ signature comes back, and anyone can verify it with no central authority to
 ask.
 
 No passwords, no per-person database. A stranger's credential becomes a scoped
-one at the door, and the NATS server stays the verifier of record.
+one at admission, and the NATS server stays the verifier of record.

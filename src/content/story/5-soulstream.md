@@ -5,7 +5,7 @@ title: One binary gathers all of it.
 eyebrow: soulstream · the house
 ---
 The house is where the system comes down to earth: the record, the name, the
-room, and the door in **one binary on a machine you own**.
+room, and the sign-in in **one binary on a machine you own**.
 
 ```
 soulstream init && soulstream up
