@@ -18,7 +18,8 @@ const SITE = 'https://impire.io';
 const SECTIONS = [
   { path: '/', section: 'soulsystem' },
   { path: '/soulsystem/', section: 'soulsystem', repo: null },
-  { path: '/soulstream/', section: 'soulsystem', repo: 'https://github.com/impire-io/soulstream' },
+  { path: '/soulstream/', section: 'soulsystem', repo: 'https://github.com/impire-io/soulstream-core' },
+  { path: '/soulstream/get-started/', section: 'soulsystem', repo: 'https://github.com/impire-io/soulstream' },
   { path: '/research/', section: 'research' },
   { path: '/pra/', section: 'research', repo: 'https://github.com/impire-io/poseres' },
   { path: '/imps/', section: 'research', repo: 'https://github.com/impire-io/imps' },

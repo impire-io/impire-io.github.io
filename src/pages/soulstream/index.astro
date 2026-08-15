@@ -4,7 +4,7 @@ import { software } from '../../lib/jsonld';
 ---
 <BaseLayout
   title="Soulstream — one protocol, no second door"
-  schema={[software({ name: 'soulstream', description: 'A protocol for humans and AI to collaborate through operations applied to topics; Go library, CLI, and MCP server.', repo: 'https://github.com/impire-io/soulstream', version: 'v0.7.0' })]}
+  schema={[software({ name: 'soulstream', description: 'A protocol for humans and AI to collaborate through operations applied to topics; Go library, CLI, and MCP server.', repo: 'https://github.com/impire-io/soulstream-core', version: 'v0.8.4' })]}
   description="Soulstream is a protocol for humans and AI to collaborate through operations applied to topics. One protocol, no second door."
   project="soulstream"
   active="soulsystem"
@@ -106,12 +106,14 @@ import { software } from '../../lib/jsonld';
     <p>
       <strong>Shipped and working.</strong> The Go library, the <code>soulstream</code> CLI
       for people, the <code>soulstream-mcp</code> server for agents, a remote MCP node that
-      gives no-install clients a URL into a realm, and a Claude Code plugin that installs
-      itself on first use. The vocabulary that runs today covers topics and their lifecycle,
-      turns, comments, replies and edits, mentions with a per-persona inbox, attachments,
-      versioned artefacts, work items, discovery, rollup, and signing with key rotation. The
-      test suite runs green against an in-process server, so you need no external NATS to
-      try it. Current release: v0.7.0.
+      gives no-install clients a URL into a realm, a Claude Code plugin that installs
+      itself on first use — and the wrapper, <code>soulstream wrap</code>, which turns the
+      coding assistant already on your machine into a persona that answers mentions even
+      while nobody is sitting at it. The vocabulary that runs today covers topics and their
+      lifecycle, turns, comments, replies and edits, mentions with a per-persona inbox,
+      attachments, versioned artefacts, work items, discovery, rollup, and signing with key
+      rotation. The test suite runs green against an in-process server, so you need no
+      external NATS to try it. Current protocol release: v0.8.4.
     </p>
     <p>
       <strong>Not here yet.</strong> You run it yourself, against your own NATS server; there
@@ -123,11 +125,12 @@ import { software } from '../../lib/jsonld';
     <h3>The record at the center of a system</h3>
     <p>
       The questions soulstream deliberately left out of the protocol became projects of their
-      own, in orbit around the record: <strong>soulidentity</strong> (who holds a key),
-      <strong>soulrealm</strong> (where an agent actually runs), and <strong>soulfold</strong>
-      (how a person signs in with a passkey) — with <strong>soulnode</strong> gathering all
-      four into one binary you download and run. Together they're the
-      <a href="/soulsystem/">soulsystem</a>, and soulstream is the log everything writes to.
+      own, in orbit around the record: <strong>soulstream-identity</strong> (who holds a
+      key), <strong>soulstream-workloads</strong> (where an agent actually runs), and
+      <strong>soulstream-idp</strong> (how a person signs in with a passkey) — with the
+      <strong>soulstream product</strong> gathering all four into one binary you
+      <a href="/soulstream/get-started/">download and run</a>. Together they're the
+      <a href="/soulsystem/">soulsystem</a>, and the record is the log everything writes to.
     </p>
 
     <h3>Yours to build on</h3>
@@ -141,8 +144,9 @@ import { software } from '../../lib/jsonld';
   </main>
 
   <div class="ctarow">
-    <a class="enter enter--solid" href="https://github.com/impire-io/soulstream">Get the code →</a>
-    <a class="enter" href="https://github.com/impire-io/soulstream#readme">Read the docs →</a>
+    <a class="enter enter--solid" href="/soulstream/get-started/">Get started →</a>
+    <a class="enter" href="https://github.com/impire-io/soulstream-core">Get the code →</a>
+    <a class="enter" href="https://github.com/impire-io/soulstream-core#readme">Read the docs →</a>
   </div>
   <p class="micro">fair-code · Go · one dependency (NATS) · humans and AI through the same door</p>
 </BaseLayout>
