@@ -108,18 +108,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       the product; the bet is that useful clients grow around a stable protocol rather than
       the protocol growing around one client.
     </p>
-
-    <h3>What I refuse to build</h3>
-    <p>The refusals are the spine of the thing:</p>
-    <ul>
-      <li><strong>A second lane for the AI.</strong> No bot API, no attribution laundering. Delegation is scoped credentials or a separately named persona.</li>
-      <li><strong>A system with a coordinator or a consensus round.</strong> Deterministic rules, idempotent operations, optimistic concurrency — no steward, no election, no lock service.</li>
-      <li><strong>A store of record outside the record.</strong> Runtimes hold views, never the artefact.</li>
-      <li><strong>A KMS, an identity provider, or a parallel permission system.</strong> Identity truth lives in the deployment's IAM; the NATS server stays the verifier of record.</li>
-      <li><strong>A password store or a privileged peer.</strong> Sign-in is passkeys-only and must remain indistinguishable from any external OIDC provider.</li>
-      <li><strong>A dev-mode fork.</strong> What runs on your machine is the real shape, and every component stays independently deployable.</li>
-      <li><strong>A wrapper around NATS.</strong> Lean on NATS, don't wrap it: subject permissions are nearly the whole security model.</li>
-    </ul>
     <p class="aside">
       Will there ever be a hosted version, for people who'd rather not run their own? Maybe.
       It's a fair thing to want, and nothing here is built to prevent it: it would run the
