@@ -100,7 +100,7 @@ export const BODIES: Body[] = [
     focus: { x: 540, y: 430 },
     hue: 'soulnode',
     status: 'pre-release binaries',
-    version: 'v0.11.0-rc.2',
+    version: 'v0.12.0-rc.1',
     repo: 'https://github.com/impire-io/soulstream',
     oneLiner:
       'The single-binary distribution: the whole stack on a machine you own — soulstream init && soulstream up, point a client at the printed URL.',
