@@ -22,6 +22,7 @@ const SECTIONS = [
   { path: '/soulsystem/', section: 'soulsystem', repo: null },
   { path: '/research/', section: 'research' },
   { path: '/pra/', section: 'research', repo: 'https://github.com/impire-io/poseres' },
+  { path: '/pra/body/', section: 'research', repo: 'https://github.com/impire-io/poseres' },
   { path: '/imps/', section: 'research', repo: 'https://github.com/impire-io/imps' },
   { path: '/about/', section: 'meta' },
   { path: '/license/', section: 'meta' },

@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BodyOrgans from '../../../components/pra/BodyOrgans.astro';
+import BodyWorlds from '../../../components/pra/BodyWorlds.astro';
+import BodySeam from '../../../components/pra/BodySeam.astro';
+---
+<BaseLayout
+  title="The anatomy of a PRA body — sensors in, actuators out"
+  ogImage="pra.png"
+  description="What a PRA body concretely looks like: the 86-number Minecraft body organ by organ, what actually crosses the seam, and why every world grows a different body."
+  project="pra"
+  active="pra"
+  footerNote="Every count on this page was verified against the running body declaration, not copied from prose."
+>
+  <header class="hero hero--sub">
+    <div class="copy">
+      <p class="eyebrow">research · pra · the body</p>
+      <h1>The anatomy of a body.</h1>
+      <p class="sub">
+        You come with one anatomy for life: brain, eyes, ears, hands, mouth. A PRA doesn't.
+        Its body is whatever the world affords — formally, just two lists: sensors in,
+        actuators out. <b>The brain is on neither list.</b>
+      </p>
+    </div>
+  </header>
+
+  <main class="prose">
+    <h3>What is a world?</h3>
+    <p>
+      Almost anything. The contract is three lines: PRA can <strong>sense</strong> a state as
+      it changes; it can <strong>act</strong>, and acting changes what it senses next; and the
+      results come back <strong>soon enough to learn from</strong>. A game qualifies. A robot's
+      room qualifies. So does a market feed, a hand on an object, or attention moving through
+      a space of ideas.
+    </p>
+    <p>
+      The mechanism doesn't care which, and this page is about the piece that makes that
+      indifference possible: the body.
+    </p>
+
+    <h3>What does a body in that world look like?</h3>
+    <p>
+      The body is the only part of PRA that touches the world, and it is smaller than the word
+      suggests: a body is exactly <strong>two lists</strong>. A list of sensors, read in a
+      fixed order into one observation. A list of acts it can perform, one per tick. Here is
+      the body PRA wears in Minecraft today, grouped the way a doctor would group it:
+    </p>
+    <figure class="fig">
+      <BodyOrgans />
+      <figcaption>figure 1 · the survival body, organ by organ</figcaption>
+    </figure>
+    <p>
+      Two things in that picture carry the whole idea. First, <strong>the head is empty on
+      purpose</strong>. The brain — the frames, the drive, the event head — is not a body
+      part. It plugs in at the seam, and it is the same engine whatever body it wears. Second,
+      some organs are missing: this body has <strong>no ears</strong>, because sound is not one
+      of its channels. A part of the world a body cannot sense does not exist for it —
+      designing an anatomy is deciding what its world <em>is</em>.
+    </p>
+    <p>
+      The mouth shows how far the no-meaning rule goes. It has no edibility check: "eat" is
+      just <em>use what you hold</em>, and what that does is the world's to decide —
+      nourishment reaches the brain only as the next observation. Taste isn't wired in either:
+      the palate is a price book the body learns from its own meals, shown to the brain as
+      <em>worth</em>, never as names.
+    </p>
+    <p>Ask for another world and you get another body:</p>
+    <figure class="fig">
+      <BodyWorlds />
+      <figcaption>figure 2 · one engine, five bodies, one scale</figcaption>
+    </figure>
+    <p>
+      That the engine truly doesn't change is measured, not promised: a probe body sharing
+      nothing structural with Minecraft ran on the same engine with zero code changes and
+      passed every transfer bar.
+    </p>
+
+    <h3>How does the brain talk to the body?</h3>
+    <p>
+      Organ words are for us. The brain sees none of them. One observation is 86 numbers in a
+      fixed order; one act is an index between 0 and 12. No names cross the seam, and no item
+      classes: a thing appears only as properties the world itself asserts — placeable,
+      edible, a count — and a small appearance signature. Categories are the brain's to form.
+    </p>
+    <figure class="fig">
+      <BodySeam />
+      <figcaption>figure 3 · the seam, and the only feedback there is</figcaption>
+    </figure>
+    <p>
+      There is no reward wire in that picture, and no success flag coming back from the acts.
+      The only feedback the brain ever receives is <strong>the next observation</strong>.
+      That is why one engine can run any body: it never needs to know what a number means,
+      only that the ordering is stable and that acting changes what arrives next.
+    </p>
+    <p>
+      Wire in a world of your own through that same seam — two lists, nothing more — and PRA
+      starts learning it.
+    </p>
+  </main>
+
+  <div class="ctarow">
+    <a class="enter enter--solid" href="https://github.com/impire-io/poseres">Get the code →</a>
+    <a class="enter" href="https://impire.io/poseres-book/appendix/the-anatomy-of-a-body.html">The appendix in the book →</a>
+    <a class="enter" href="/pra/">Back to PRA →</a>
+  </div>
+  <p class="micro">86 numbers in · 13 acts out · verified against the running body</p>
+</BaseLayout>
+
+<style>
+  .prose figure.fig {
+    max-width: 100%;
+    margin: 26px 0 34px;
+  }
+  .fig :global(svg) {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+  }
+  .fig figcaption {
+    font: 500 0.72rem var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 10px;
+  }
+</style>
