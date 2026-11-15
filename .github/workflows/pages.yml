@@ -1,0 +1,89 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the page
+        shell: python3 {0}
+        run: |
+          import base64, hashlib, re, sys
+          from html.parser import HTMLParser
+
+          fail = []
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.tags, self.scripts, self.refs, self.inscript, self.body = [], [], [], False, ""
+              def handle_starttag(self, tag, attrs):
+                  self.tags.append(tag)
+                  a = dict(attrs)
+                  if tag == "script":
+                      self.inscript = True
+                      if "src" in a: fail.append("a script loads from a source")
+                  for k in ("src", "href", "action", "srcset", "poster"):
+                      if k in a: self.refs.append(a[k])
+              def handle_endtag(self, tag):
+                  if tag == "script": self.inscript = False
+              def handle_data(self, data):
+                  if self.inscript: self.scripts.append(data)
+
+          for name in ("index.html", "404.html"):
+              text = open(name, encoding="utf-8").read()
+              p = Page(); p.feed(text)
+              if p.tags.count("h1") != 1: fail.append(f"{name}: not exactly one h1")
+              for bad in ("form", "iframe", "img", "video", "audio", "object", "embed"):
+                  if bad in p.tags: fail.append(f"{name}: a <{bad}>")
+              for r in p.refs:
+                  if not (r == "/" or r.startswith("#") or r == "mailto:hello@impire.io" or r.startswith("data:")):
+                      fail.append(f"{name}: a reference to {r[:60]}")
+              if re.search(r"document\.cookie|localStorage|sessionStorage|indexedDB|fetch\(|XMLHttpRequest|sendBeacon|@import|prefers-color-scheme: dark", text):
+                  fail.append(f"{name}: storage, a request, an import or a dark theme")
+              for s in p.scripts:
+                  h = "sha256-" + base64.b64encode(hashlib.sha256(s.encode()).digest()).decode()
+                  if f"'{h}'" not in text: fail.append(f"{name}: the script's hash is not in the policy")
+
+          index = open("index.html", encoding="utf-8").read()
+          if index.count("<h2") != 7: fail.append("index.html: not seven sections")
+          for word in ("best", "the only", "leading", "Sign in", "Get started"):
+              if re.search(r"\b" + word + r"\b", re.sub(r"<script>.*?</script>|<style>.*?</style>", "", index, flags=re.S)):
+                  fail.append(f"index.html: '{word}'")
+
+          print("\n".join(fail) or "the page holds")
+          sys.exit(1 if fail else 0)
+      - name: Stage the site
+        run: |
+          mkdir _site
+          cp index.html 404.html robots.txt CNAME _site/
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
