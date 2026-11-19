@@ -8,4 +8,4 @@ The page is the static twin of the console's front page, the signed-out site. Th
 
 The workflow in `.github/workflows/pages.yml` checks the page on every pull request and, on `main`, publishes `index.html`, `404.html`, `robots.txt` and `CNAME` and nothing else.
 
-The page embeds the latin subsets of Geist and Geist Mono (version 5.3.0, the console's), by Vercel, under the SIL Open Font License 1.1.
+The page embeds Selawik Regular and Semibold (Microsoft's open twin of Segoe UI, the brand's typeface; the console's own files, unhinted) and the latin subset of Cascadia Mono (fontsource 5.3.0), both under the SIL Open Font License 1.1; the look is the brand manual's (impire-hq `00-META/brand.md`, decision 0178): the cover and the close on navy, the content on white.
